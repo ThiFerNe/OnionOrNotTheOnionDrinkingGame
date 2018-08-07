@@ -1,0 +1,36 @@
+RewriteEngine on
+
+# enable symbolic links
+Options +SymLinksIfOwnerMatch
+
+DirectoryIndex frontcontroller.php
+
+# If not HTTPS force it!
+#RewriteCond %{HTTPS} !=on
+#RewriteCond %{ENV:HTTPS} !=on
+#RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R=302,L]
+
+# If none is specified => frontcontroller
+#RewriteRule ^$ frontcontroller.php [QSA,L]
+
+# If it does not exist => frontcontroller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ frontcontroller.php?fcr=$1 [QSA,L]
+
+# If it is just a folder => frontcontroller
+RewriteCond %{REQUEST_FILENAME} ^.*/$
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*)$ frontcontroller.php?fcr=$1 [QSA,L]
+
+# If it is a file not within a folder specified here => index
+#RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_URI} !js/.*$
+RewriteCond %{REQUEST_URI} !cmps/.*$
+RewriteCond %{REQUEST_URI} !css/.*$
+RewriteCond %{REQUEST_URI} !images/.*$
+RewriteCond %{REQUEST_URI} !fonts/.*$
+RewriteCond %{REQUEST_URI} !favicon.png$
+RewriteRule ^(.*)$ frontcontroller.php?fcr=$1 [QSA,L]
+
+#RewriteRule ^(.*)$ frontcontroller.php?fcr=$1 [QSA,L]
