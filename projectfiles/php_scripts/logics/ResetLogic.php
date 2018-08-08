@@ -45,6 +45,20 @@ class ResetLogic
                 self::HYPERLINK => "https://local.theonion.com/boyfriend-ready-to-take-relationship-to-previous-level-1819568844",
                 self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
                 self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--mGgZC5ev--/c_fit,f_auto,fl_progressive,q_80,w_470/iggnu22540u3xquulugb.jpg"
+            ),
+            array(
+                self::HEADLINE => "Man grieved at wrong grave for 30 years due to misplaced headstone",
+                self::IS_ONION => 0,
+                self::HYPERLINK => "https://www.bbc.com/news/uk-england-manchester-45111652",
+                self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
+                self::PICTURE => "https://ichef.bbci.co.uk/news/660/cpsprodpb/37A7/production/_102874241_georgesalt.jpg"
+            ),
+            array(
+                self::HEADLINE => "Climate Researchers Warn Only Hope For Humanity Now Lies In Possibility They Making All Of This Up",
+                self::IS_ONION => 1,
+                self::HYPERLINK => "https://www.theonion.com/climate-researchers-warn-only-hope-for-humanity-now-lie-1828171232",
+                self::FURTHER_EXPLANATION => "EXPLAIN!",
+                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--y7sD2HrQ--/c_scale,f_auto,fl_progressive,q_80,w_800/dqxcvdc7drqhz0bifa1x.jpg"
             )
         );
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
@@ -97,7 +111,10 @@ class ResetLogic
               `current_state` int(11) DEFAULT 0,
               `current_state_on` int(11),
               `current_gamedata` int(11),
-              `timer` int(11) NOT NULL DEFAULT '-1'
+              `max_questions` int(11) NOT NULL,
+              `current_questions` int(11) NOT NULL DEFAULT 0,
+              `timer` int(11) NOT NULL DEFAULT '-1',
+              `end_ranking` text CHARACTER SET utf8
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
             "ALTER TABLE `lobby`
               ADD PRIMARY KEY (`id`);",

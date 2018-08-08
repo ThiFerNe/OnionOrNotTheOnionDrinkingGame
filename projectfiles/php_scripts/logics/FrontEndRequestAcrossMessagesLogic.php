@@ -29,6 +29,10 @@ class FrontEndRequestAcrossMessagesLogic
     public const MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED = "Message_IndexController_Error_Joining_Lobby_Failed";
     public const MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE = "Message_GameController_Error_Wrong_State";
     public const MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL = "Message_GameController_Error_LobbyId_Null";
+    public const MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED = "Message_GameController_Error_Both_Options_Were_Wanted";
+    public const MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS = "Message_GameController_Error_Invalid_Question_Id_Not_Exists";
+    public const MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER = "Message_GameController_Error_Invalid_Question_Id_No_Number";
+    public const MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID = "Message_GameController_Error_Missing_Question_Id";
 
     public const MESSAGEDEFAULT_INTERNAL_SERVER_ERROR = "An internal server error happened.";
 
@@ -43,7 +47,11 @@ class FrontEndRequestAcrossMessagesLogic
         self::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED => "Creating the lobby has failed!",
         self::MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED => "Joining the lobby has failed!",
         self::MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL => "The lobby does not exist!"
+        self::MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL => "The lobby does not exist!",
+        self::MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
+        self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
+        self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
+        self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR
     );
 
     public static function appendMessage(string $type, string $message, string $sourcePrefix)

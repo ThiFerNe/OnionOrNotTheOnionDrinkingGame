@@ -19,7 +19,7 @@ class LobbyLogic
     public const STATE_AFTERMATH = 2;
     public const STATE_END = 3;
 
-    public static function createLobby(int $timerWanted)
+    public static function createLobby(int $timerWanted, int $max_questions)
     {
         $lobbycode = self::generateLobbyCode();
         if ($lobbycode === NULL) {
@@ -27,9 +27,9 @@ class LobbyLogic
         }
         $preparedStatement =
             \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`) VALUES (?, ?, ?, ?);"
+                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`, `max_questions`) VALUES (?, ?, ?, ?, ?);"
             );
-        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted))) {
+        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted, $max_questions))) {
             return $lobbycode;
         }
         return NULL;
@@ -189,6 +189,50 @@ class LobbyLogic
         return $preparedStatement->execute(array($currentGameData, $lobbyid));
     }
 
+    public static function unsetCurrentGameDataByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `lobby` SET `current_gamedata` = NULL WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($lobbyid));
+    }
+
+    public static function getMaxQuestionsByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `max_questions` FROM `lobby` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["max_questions"];
+            }
+        }
+        return NULL;
+    }
+
+    public static function getCurrentQuestionsByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `current_questions` FROM `lobby` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["current_questions"];
+            }
+        }
+        return NULL;
+    }
+
+    public static function setCurrentQuestionsByLobbyId(int $lobbyid, int $currentQuestions)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "UPDATE `lobby` SET `current_questions` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($currentQuestions, $lobbyid));
+    }
+
     public static function getTimerByLobbyId(int $lobbyid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
@@ -201,6 +245,36 @@ class LobbyLogic
             }
         }
         return NULL;
+    }
+
+    public static function getEndRankingByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `end_ranking` FROM `lobby` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["end_ranking"];
+            }
+        }
+        return NULL;
+    }
+
+    public static function setEndRankingByLobbyId(int $lobbyid, string $endRanking)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `lobby` SET `end_ranking` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($endRanking, $lobbyid));
+    }
+
+    public static function unsetEndRankingByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `lobby` SET `end_ranking` = NULL WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($lobbyid));
     }
 
     public static function removeLobbyByLobbyId(int $lobbyid)
@@ -223,10 +297,14 @@ class LobbyLogic
                 $fetched_rows = $preparedStatement->fetchAll(\PDO::FETCH_ASSOC);
                 $selected_question = $fetched_rows[rand(0, count($fetched_rows) - 1)]["id"];
 
-                $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-                    "UPDATE `lobby` SET `current_gamedata` = ? WHERE `id` = ?;"
+                $preparedStatement1 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+                    "UPDATE `lobby` SET `current_gamedata` = ?, `current_questions` = `current_questions` + 1 WHERE `id` = ?;"
                 );
-                return $preparedStatement->execute(array($selected_question, $lobbyid));
+                $preparedStatement2 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+                    "INSERT INTO `lobby_used_gamedata` (`gid`, `lid`) VALUES (?, ?);"
+                );
+                return $preparedStatement1->execute(array($selected_question, $lobbyid)) &&
+                    $preparedStatement2->execute(array($selected_question, $lobbyid));
             }
         }
         return FALSE;
@@ -243,6 +321,16 @@ class LobbyLogic
             return TRUE;
         }
         return $lobbyUsedGameDataCount >= $gameDataCount;
+    }
+
+    public static function hasLobbyUsedEnoughQuestions(int $lobbyid)
+    {
+        $maxQuestions = self::getMaxQuestionsByLobbyId($lobbyid);
+        if ($maxQuestions < 0) {
+            return FALSE;
+        }
+        $currentQuestions = self::getCurrentQuestionsByLobbyId($lobbyid);
+        return $currentQuestions >= $maxQuestions;
     }
 
 }

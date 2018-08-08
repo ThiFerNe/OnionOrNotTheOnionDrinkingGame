@@ -91,12 +91,26 @@ class IndexController extends AbstractController
                         );
                     }
                 }
+                $max_questions = NULL;
+                if (empty($_POST["max_questions"])) {
+                    $max_questions = -1;
+                } else {
+                    $max_questions = intval($_POST["max_questions"]);
+                    if ($_POST["max_questions"] !== strval($max_questions)) {
+                        $error_occurred = TRUE;
+                        FERequestAcrossMLogic::appendMessage(
+                            FERequestAcrossMLogic::TYPE_ERROR,
+                            FERequestAcrossMLogic::MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID,
+                            self::PREFIX
+                        );
+                    }
+                }
 
                 if ($error_occurred) {
                     return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix());
                 } else {
                     if ($create_lobby) {
-                        if(($invite_code = \logics\LobbyLogic::createLobby($timer_wanted))===NULL) {
+                        if(($invite_code = \logics\LobbyLogic::createLobby($timer_wanted, $max_questions))===NULL) {
                             FERequestAcrossMLogic::appendMessage(
                                 FERequestAcrossMLogic::TYPE_ERROR,
                                 FERequestAcrossMLogic::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED,

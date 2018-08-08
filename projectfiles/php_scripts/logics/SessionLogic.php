@@ -134,6 +134,20 @@ class SessionLogic
         return NULL;
     }
 
+    public static function setLastActiveByUserSessionId(string $usersessionid, int $lastActive) {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `last_active` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($lastActive, $usersessionid));
+    }
+
+    public static function setLastActiveByPhpSessionId(string $phpsessionid, int $lastActive) {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `last_active` = ? WHERE `session_id` = ?;"
+        );
+        return $preparedStatement->execute(array($lastActive, $phpsessionid));
+    }
+
     public static function getInLobbyByUserSessionId(int $usersessionid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
@@ -177,6 +191,20 @@ class SessionLogic
         return NULL;
     }
 
+    public static function setPointsByUserSessionId(int $usersessionid, int $points) {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `points` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($points, $usersessionid));
+    }
+
+    public static function addPointsByUserSessionId(int $usersessionid, int $points) {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `points` = `points` + ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($points, $usersessionid));
+    }
+
     public static function isOnlyWatcherByUserSessionId(int $usersessionid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
@@ -185,7 +213,7 @@ class SessionLogic
         if ($preparedStatement->execute(array($usersessionid))) {
             if ($preparedStatement->rowCount() > 0) {
                 $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
-                return $fetched_row["only_watcher"] === 1;
+                return $fetched_row["only_watcher"] == 1;
             }
         }
         return NULL;
@@ -199,7 +227,7 @@ class SessionLogic
         if ($preparedStatement->execute(array($phpsessionid))) {
             if ($preparedStatement->rowCount() > 0) {
                 $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
-                return $fetched_row["only_watcher"] === 1;
+                return $fetched_row["only_watcher"] == 1;
             }
         }
         return NULL;
@@ -217,6 +245,14 @@ class SessionLogic
             }
         }
         return NULL;
+    }
+
+    public static function setActualAnswerIsOnionByUserSessionId(int $usersessionid, int $actualAnswerIsOnion)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `actual_answer_is_onion` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($actualAnswerIsOnion, $usersessionid));
     }
 
     public static function removeSessionByPhpSessionId(string $phpsessionid)
@@ -248,7 +284,7 @@ class SessionLogic
     public static function everyoneHasAnsweredInLobby(int $lobbyid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
-            "SELECT COUNT(*) AS anzahl FROM `session` WHERE `in_lobby` = ? AND `actual_answer_is_onion` = 0;"
+            "SELECT COUNT(*) AS anzahl FROM `session` WHERE `in_lobby` = ? AND `actual_answer_is_onion` = 0 AND `only_watcher` = 0;"
         );
         if ($preparedStatement->execute(array($lobbyid))) {
             if ($preparedStatement->rowCount() > 0) {
@@ -257,5 +293,13 @@ class SessionLogic
             }
         }
         return FALSE;
+    }
+
+    public static function handleDownvoteByPhpSessionId(string $sessionid, int $gid) {
+
+    }
+
+    public static function handleUpvoteByPhpSessionId(string $sessionid, int $gid) {
+
     }
 }

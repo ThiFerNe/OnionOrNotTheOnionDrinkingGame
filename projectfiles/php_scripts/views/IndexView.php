@@ -42,6 +42,7 @@ class IndexView extends AbstractView
                         echo htmlentities($_GET["invitecode"]);
                     }
                 ?>" placeholder="Invite Code"/>
+                <input type="text" name="max_questions" value="" placeholder="Questions - Leave Blank if all are wished"/>
                 <input type="text" name="timer_wanted" value="" placeholder="Timer - Leave Blank if none is wished"/>
                 <p>With no invite code a new game will be started. Otherwise the game with the code will be joined.</p>
                 <input type="submit" name="start_or_join_game" value="START"/>
