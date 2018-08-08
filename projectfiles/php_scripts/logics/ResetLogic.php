@@ -6,6 +6,10 @@ require_once(__DIR__ . "/../integration/DatabaseIntegration.php");
 
 require_once(__DIR__ . "/../logics/GameDataLocalizationLogic.php");
 
+require_once(__DIR__ . "/../helper/LogHelper.php");
+
+use \helper\LogHelper as LOG;
+
 class ResetLogic
 {
 
@@ -143,7 +147,7 @@ class ResetLogic
               `picture` varchar(256) DEFAULT NULL,
               `upvotes` bigint(20) NOT NULL DEFAULT '0',
               `downvotes` bigint(20) NOT NULL DEFAULT '0'
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `gamedata`
               ADD PRIMARY KEY (`id`);",
             "ALTER TABLE `gamedata`
@@ -154,7 +158,7 @@ class ResetLogic
               `locale` varchar(8) DEFAULT NULL,
               `headline` text CHARACTER SET utf8,
               `further_explanation` text CHARACTER SET utf8
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `gamedata_localization`
               ADD PRIMARY KEY (`id`);",
             "ALTER TABLE `gamedata_localization`
@@ -172,7 +176,7 @@ class ResetLogic
               `minimum_score` int(11) DEFAULT NULL,
               `timer` int(11) NOT NULL DEFAULT '-1',
               `end_ranking` text CHARACTER SET utf8
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `lobby`
               ADD PRIMARY KEY (`id`);",
             "ALTER TABLE `lobby`
@@ -180,7 +184,7 @@ class ResetLogic
             "CREATE TABLE `lobby_used_gamedata` (
               `gid` int(11) NOT NULL,
               `lid` int(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "CREATE TABLE `session` (
               `id` int(11) NOT NULL,
               `session_id` varchar(128) CHARACTER SET utf8 NOT NULL,
@@ -190,7 +194,7 @@ class ResetLogic
               `points` int(11) NOT NULL DEFAULT '0',
               `only_watcher` tinyint(1) NOT NULL DEFAULT 0,
               `actual_answer_is_onion` int(11) NOT NULL DEFAULT 0
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `session`
               ADD PRIMARY KEY (`id`);",
             "ALTER TABLE `session`
@@ -199,7 +203,7 @@ class ResetLogic
               `gid` int(11) NOT NULL,
               `sid` int(11) NOT NULL,
               `was_upvote` tinyint(1) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "CREATE TABLE `onion_config` ( `config_key` VARCHAR(128) NOT NULL , `config_value` VARCHAR(256) NOT NULL , PRIMARY KEY (`config_key`)) ENGINE = InnoDB;",
             "commit;"
         );
