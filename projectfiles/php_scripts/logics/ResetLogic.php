@@ -4,6 +4,7 @@ namespace logics;
 
 require_once(__DIR__ . "/../integration/DatabaseIntegration.php");
 
+require_once(__DIR__ . "/../logics/GameDataLocalizationLogic.php");
 
 class ResetLogic
 {
@@ -15,6 +16,8 @@ class ResetLogic
     const HYPERLINK = "hyperlink";
     const FURTHER_EXPLANATION = "further_explanation";
     const PICTURE = "picture";
+    const LOCALIZATION = "localization";
+    const LOCALE = "locale";
 
     /**
      * @return bool|boolean True if the website does not allow reset
@@ -44,25 +47,49 @@ class ResetLogic
                 self::IS_ONION => 1,
                 self::HYPERLINK => "https://local.theonion.com/boyfriend-ready-to-take-relationship-to-previous-level-1819568844",
                 self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
-                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--mGgZC5ev--/c_fit,f_auto,fl_progressive,q_80,w_470/iggnu22540u3xquulugb.jpg"
+                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--mGgZC5ev--/c_fit,f_auto,fl_progressive,q_80,w_470/iggnu22540u3xquulugb.jpg",
+                self::LOCALIZATION => array(
+                    array(
+                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
+                        self::HEADLINE => "Fester Freund ist bereit die Beziehung auf die vorherige Stufe zu bringen",
+                        self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN"
+                    )
+                )
             ),
             array(
                 self::HEADLINE => "Man grieved at wrong grave for 30 years due to misplaced headstone",
                 self::IS_ONION => 0,
                 self::HYPERLINK => "https://www.bbc.com/news/uk-england-manchester-45111652",
                 self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
-                self::PICTURE => "https://ichef.bbci.co.uk/news/660/cpsprodpb/37A7/production/_102874241_georgesalt.jpg"
+                self::PICTURE => "https://ichef.bbci.co.uk/news/660/cpsprodpb/37A7/production/_102874241_georgesalt.jpg",
+                self::LOCALIZATION => array(
+                    array(
+                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
+                        self::HEADLINE => "Mann hat 30 Jahre lang aufgrund eines falsch gesetzten Grabsteins am falschen Grab getrauert",
+                        self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN"
+                    )
+                )
             ),
             array(
                 self::HEADLINE => "Climate Researchers Warn Only Hope For Humanity Now Lies In Possibility They Making All Of This Up",
                 self::IS_ONION => 1,
                 self::HYPERLINK => "https://www.theonion.com/climate-researchers-warn-only-hope-for-humanity-now-lie-1828171232",
                 self::FURTHER_EXPLANATION => "EXPLAIN!",
-                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--y7sD2HrQ--/c_scale,f_auto,fl_progressive,q_80,w_800/dqxcvdc7drqhz0bifa1x.jpg"
+                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--y7sD2HrQ--/c_scale,f_auto,fl_progressive,q_80,w_800/dqxcvdc7drqhz0bifa1x.jpg",
+                self::LOCALIZATION => array(
+                    array(
+                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
+                        self::HEADLINE => "Klimaforcher warnen die einzige Hoffnung für die Menschheit läge nun darin, dass sie sich das ganze nur ausgedacht hätten",
+                        self::FURTHER_EXPLANATION => "EXPLAIN"
+                    )
+                )
             )
         );
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "INSERT INTO `gamedata` (`headline`, `is_onion`, `hyperlink`, `further_explanation`, `picture`) VALUES (?, ?, ?, ?, ?);"
+        );
+        $preparedStatement2 = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT MAX(`id`) AS `mid` FROM `gamedata`;"
         );
         foreach ($questions as $question) {
             if (!$preparedStatement->execute(array(
@@ -73,6 +100,23 @@ class ResetLogic
                 $question[self::PICTURE]
             ))) {
                 return FALSE;
+            }
+            if (!$preparedStatement2->execute(array())) {
+                return FALSE;
+            }
+            if ($preparedStatement2->rowCount() <= 0) {
+                return FALSE;
+            }
+            $gid = $preparedStatement2->fetch(\PDO::FETCH_ASSOC)["mid"];
+            foreach ($question[self::LOCALIZATION] as $current_localization) {
+                if(!\logics\GameDataLocalizationLogic::add(
+                    $gid,
+                    $current_localization[self::LOCALE],
+                    $current_localization[self::HEADLINE],
+                    $current_localization[self::FURTHER_EXPLANATION]
+                )) {
+                    return FALSE;
+                }
             }
         }
         return TRUE;
@@ -85,6 +129,7 @@ class ResetLogic
     {
         $sqlqueries = array(
             "DROP TABLE `gamedata`;",
+            "DROP TABLE `gamedata_localization`;",
             "DROP TABLE `lobby`;",
             "DROP TABLE `lobby_used_gamedata`;",
             "DROP TABLE `session`;",
@@ -102,6 +147,17 @@ class ResetLogic
             "ALTER TABLE `gamedata`
               ADD PRIMARY KEY (`id`);",
             "ALTER TABLE `gamedata`
+              MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;",
+            "CREATE TABLE `gamedata_localization` (
+              `id` int(11) NOT NULL,
+              `gid` int(11) NOT NULL,
+              `locale` varchar(8) DEFAULT NULL,
+              `headline` text CHARACTER SET utf8,
+              `further_explanation` text CHARACTER SET utf8
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+            "ALTER TABLE `gamedata_localization`
+              ADD PRIMARY KEY (`id`);",
+            "ALTER TABLE `gamedata_localization`
               MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;",
             "CREATE TABLE `lobby` (
               `id` int(11) NOT NULL,

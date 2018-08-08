@@ -5,7 +5,20 @@ namespace logics\further;
 class LocalizationStore
 {
     public const LOCALE_ENGLISH = "Locale_English";
+    public const LOCALE_ENGLISH_SHORT = "en";
     public const LOCALE_GERMAN = "Locale_German";
+    public const LOCALE_GERMAN_SHORT = "de";
+
+    public static function getShortForLocale(string $longLocale)
+    {
+        switch ($longLocale) {
+            case self::LOCALE_GERMAN:
+                return self::LOCALE_GERMAN_SHORT;
+            case self::LOCALE_ENGLISH:
+            default:
+                return self::LOCALE_ENGLISH_SHORT;
+        }
+    }
 
     public static function loadLocale(string $locale)
     {

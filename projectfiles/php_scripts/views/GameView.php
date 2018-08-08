@@ -71,7 +71,15 @@ class GameView extends AbstractView
                     ?>
                     <h1>
                         <?php
-                        echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE];
+                        if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
+                            $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
+                            echo \logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
+                                $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                                \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()));
+                        } else {
+                            echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE];
+                        }
                         ?>
                     </h1>
                     <?php
@@ -98,12 +106,22 @@ class GameView extends AbstractView
                 case \logics\LobbyLogic::STATE_AFTERMATH:
                     ?>
                     <h1>
-                        <?php echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE]; ?>
+                        <?php
+                        if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
+                            $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
+                            echo \logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
+                                $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                                \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()));
+                        } else {
+                            echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE];
+                        }
+                        ?>
                     </h1>
                     <h2>
                         <?php
                         $val1 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART1);
-                        if(strlen($val1) > 0) {
+                        if (strlen($val1) > 0) {
                             echo $val1 . " ";
                         }
                         if ($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_IS_ONION]) {
@@ -112,7 +130,7 @@ class GameView extends AbstractView
                             echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_TERM_NOT_THE_ONION);
                         }
                         $val2 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART2);
-                        if(strlen($val2) > 0) {
+                        if (strlen($val2) > 0) {
                             echo " " . $val2;
                         }
                         if (!$is_watcher) {
@@ -128,12 +146,22 @@ class GameView extends AbstractView
                     echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_PICTURE];
                     ?>"/>
                     <p>
-                        <?php echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_FURTHER_EXPLANATION]; ?>
+                        <?php
+                        if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
+                            $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
+                            echo \logics\GameDataLocalizationLogic::getFurtherExplanationByGameDataIdAndLocaleShort(
+                                $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
+                                \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()));
+                        } else {
+                            echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_FURTHER_EXPLANATION];
+                        }
+                        ?>
                     </p>
                     <a href="<?php
                     echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HYPERLINK];
                     ?>" target="_blank"><?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_LINK_TO_POST);
+                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_LINK_TO_POST);
                         ?></a>
                     <?php
                     if (!$is_watcher) {
