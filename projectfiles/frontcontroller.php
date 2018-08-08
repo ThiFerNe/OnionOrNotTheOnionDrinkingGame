@@ -2,14 +2,13 @@
 /*
  * Following two lines are just for debugging purposes and should be removed after development has finished.
  */
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 /*
  * With this a PHP session is started or continued.
  * It is here at this position, because this feature should be available as early as possible.
  */
-session_set_cookie_params(300);
 session_start();
 
 /*
@@ -19,7 +18,7 @@ require_once("php_scripts/helper/LogHelper.php");
 
 use \helper\LogHelper as LOG;
 
-LOG::$LOGFILE_PATH = realpath(join("/", array(__DIR__, "logs/"))) . "/" . "toymodels.log";
+LOG::$LOGFILE_PATH = realpath(join("/", array(__DIR__, "logs/"))) . "/" . "onionornottheonion.log";
 LOG::$LOG_LEVEL = LOG::LEVEL_TRACE;
 
 /*
@@ -36,7 +35,11 @@ require_once("php_scripts/views/ErrorDocument500View.php");
 require_once("php_scripts/views/ErrorDocument404View.php");
 require_once("php_scripts/views/ErrorDocument303View.php");
 
+require_once("php_scripts/logics/ResetLogic.php");
+require_once("php_scripts/logics/UpdateLogic.php");
+
 require_once("php_scripts/helper/VariousHelper.php");
+
 
 /*
  * Define a $_RESPONSE "server" variable.
@@ -55,17 +58,9 @@ $_RESPONSE = array();
 $controller = array();
 $controller["/"] = "IndexController";
 $controller["/index"] = "IndexController";
-$controller["/about"] = "AboutController";
-$controller["/account"] = "AccountController";
-$controller["/checkout"] = "CheckOutController";
-$controller["/impressum"] = "ImpressumController";
-$controller["/login"] = "LoginController";
-$controller["/logout"] = "LogoutController";
-$controller["/product"] = "ProductController";
-$controller["/register"] = "RegisterController";
-$controller["/search"] = "SearchController";
-$controller["/shoppingcart"] = "ShoppingCartController";
-$controller["/api"] = "ApiController";
+$controller["/game"] = "GameController";
+$controller["/reset"] = "ResetController";
+$controller["/exit"] = "ExitController";
 
 /*
  * To route the incoming request, we have to get the top level request uri.
@@ -73,6 +68,24 @@ $controller["/api"] = "ApiController";
  */
 
 $requestTopUri = \helper\VariousHelper::getRequestTopUri();
+
+/*
+ * At first check if this website is set up.
+ */
+
+if (!\logics\ResetLogic::isWebsiteBeenSetup() && $requestTopUri !== "/reset") {
+    LOG::TRACE("Setup has been triggered");
+    header('Location: ' . \helper\VariousHelper::getUrlPrefix() . "reset", true, 303);
+    $_RESPONSE[\views\ErrorDocument303View::PREFIX . \views\ErrorDocument303View::REFER_TO] = \helper\VariousHelper::getUrlPrefix() . "reset";
+    (new \views\ErrorDocument303View())->print();
+    exit;
+}
+
+/**
+ * Force Updated of System!
+ */
+
+\logics\UpdateLogic::updateAll();
 
 /*
  * Logging the requested uri and the transformed top level request uri:

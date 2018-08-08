@@ -43,9 +43,9 @@ class DatabaseIntegration
                 global $databaseReadUsername;
                 global $databaseReadPassword;
 
-                $databaseReadConnectionString = "mysql:host=db-training.informatik.fh-nuernberg.de;dbname=db18_neumannth";
-                $databaseReadUsername = "db18_neumannth";
-                $databaseReadPassword = "db18_neumannth";
+                $databaseReadConnectionString = "mysql:host=localhost;dbname=onionornottheonion";
+                $databaseReadUsername = "root";
+                $databaseReadPassword = "";
                 if(file_exists(__DIR__ . "/DatabaseConnectOverride.php")) {
                     include(__DIR__ . "/DatabaseConnectOverride.php");
                 }
@@ -77,9 +77,9 @@ class DatabaseIntegration
                 global $databaseWriteConnectionString;
                 global $databaseWriteUsername;
                 global $databaseWritePassword;
-                $databaseWriteConnectionString = "mysql:host=db-training.informatik.fh-nuernberg.de;dbname=db18_neumannth";
-                $databaseWriteUsername = "db18_neumannth";
-                $databaseWritePassword = "db18_neumannth";
+                $databaseWriteConnectionString = "mysql:host=localhost;dbname=onionornottheonion";
+                $databaseWriteUsername = "root";
+                $databaseWritePassword = "";
                 if(file_exists(__DIR__ . "/DatabaseConnectOverride.php")) {
                     include(__DIR__ . "/DatabaseConnectOverride.php");
                 }
