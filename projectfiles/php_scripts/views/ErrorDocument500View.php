@@ -28,7 +28,8 @@ class ErrorDocument500View extends AbstractView
      * @see \controllers\AbstractView::isRestrictedView()
      * @return bool (More to read at parent function)
      */
-    protected function isRestrictedView() {
+    protected function isRestrictedView()
+    {
         return TRUE;
     }
 
@@ -43,15 +44,14 @@ class ErrorDocument500View extends AbstractView
         <main>
             <article>
                 <h1>
-                    500 - Interner Server Fehler
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_HEADLINE);
+                    ?>
                 </h1>
                 <p>
-                    Es entstand ein interner Fehler im Server, der sehr wahrscheinlich aufgrund einer fehlerhaften
-                    Programmierung auftrat.
-                </p>
-                <p class="italic">
-                    Sofern Sie ein Entwickler sind schauen Sie bitte in das Logfile im 'logs/' Ordner.<br/>
-                    Logdateien werden nur erzeugt, wenn dieser 'logs/' Ordner existiert.
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_PARAGRAPH);
+                    ?>
                 </p>
             </article>
         </main>

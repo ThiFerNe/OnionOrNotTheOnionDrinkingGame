@@ -4,6 +4,9 @@ namespace views;
 
 require_once("AbstractView.php");
 
+require_once(__DIR__ . "/../logics/LocalizationLogic.php");
+require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
+
 /**
  * The view for the ErrorDocument 303 page
  *
@@ -38,7 +41,8 @@ class ErrorDocument303View extends AbstractView
      * @see \controllers\AbstractView::isRestrictedView()
      * @return bool (More to read at parent function)
      */
-    protected function isRestrictedView() {
+    protected function isRestrictedView()
+    {
         return TRUE;
     }
 
@@ -54,13 +58,15 @@ class ErrorDocument303View extends AbstractView
         <main>
             <article>
                 <h1>
-                    303 - See Other
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_HEADLINE);
+                    ?>
                 </h1>
                 <p>
-                    Wir haben versucht Sie weiterzuleiten, aber das war uns nicht möglich.<br/>
-                    Bitte klicken Sie eigenständig auf folgenden Link: <a
-                            href="<?php echo $_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO];
-                            ?>"><?php echo htmlentities($_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO]); ?></a>.
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_PARAGRAPH);
+                    ?> <a href="<?php echo $_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO];
+                    ?>"><?php echo htmlentities($_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO]); ?></a>.
                 </p>
             </article>
         </main>

@@ -36,28 +36,6 @@ class FrontEndRequestAcrossMessagesLogic
     public const MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID = "Message_IndexController_Error_Questions_Invalid";
     public const MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID = "Message_IndexController_Error_Minimum_Score_Invalid";
 
-    public const MESSAGEDEFAULT_INTERNAL_SERVER_ERROR = "An internal server error happened.";
-
-    public const MESSAGES = array(
-        self::MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL => "The reset has been successful!",
-        self::MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC => "An error occurred during the reset!",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING => "Your name has been missing!",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG => "Your name has been too long! Please choose one smaller than 60 characters.",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG => "Your invite code has been too long! It should be smaller than 17 characters.",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID => "Your value for the timer has been invalid! Please use a number.",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME => "Your value for the timer exceeded 10 minutes! That's too long!",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED => "Creating the lobby has failed!",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED => "Joining the lobby has failed!",
-        self::MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL => "The lobby does not exist!",
-        self::MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID => "The number of questions has been invalid! Please use a number!",
-        self::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID => "The minimum score has been invalid! Please use a number!"
-    );
-
     public static function appendMessage(string $type, string $message, string $sourcePrefix)
     {
         if (!isset($_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY])) {
@@ -122,9 +100,68 @@ class FrontEndRequestAcrossMessagesLogic
                         echo "msg-box-info";
                         break;
                 }
-                ?>"><?php echo self::MESSAGES[$message[self::ARRAY_KEY_MESSAGE]]; ?></section>
+                ?>"><?php echo self::getMessage($message[self::ARRAY_KEY_MESSAGE]); ?></section>
                 <?php
             }
+        }
+    }
+
+    public static function getMessage(string $messageId)
+    {
+        switch ($messageId) {
+            case self::MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER);
+            case self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID);
+            case self::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID);
+            default:
+                return "#error#";
         }
     }
 }

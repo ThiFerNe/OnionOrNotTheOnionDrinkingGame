@@ -4,6 +4,9 @@ namespace views;
 
 require_once("AbstractView.php");
 
+require_once(__DIR__ . "/../logics/LocalizationLogic.php");
+require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
+
 /**
  * The view for the ErrorDocument 404 page
  *
@@ -17,7 +20,8 @@ class ErrorDocument404View extends AbstractView
      * @see \controllers\AbstractView::getCssIncludeFiles()
      * @return array (More to read at parent function)
      */
-    public function getCssIncludeFiles() {
+    public function getCssIncludeFiles()
+    {
         return array("errordocument.css");
     }
 
@@ -27,7 +31,8 @@ class ErrorDocument404View extends AbstractView
      * @see \controllers\AbstractView::isRestrictedView()
      * @return bool (More to read at parent function)
      */
-    protected function isRestrictedView() {
+    protected function isRestrictedView()
+    {
         return TRUE;
     }
 
@@ -36,16 +41,20 @@ class ErrorDocument404View extends AbstractView
      *
      * @see \controllers\AbstractView::printMain()
      */
-    public function printMain() {
+    public function printMain()
+    {
         ?>
         <main>
             <article>
                 <h1>
-                    404 - Nicht gefunden
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT404VIEW_BODY_MAIN_HEADLINE);
+                    ?>
                 </h1>
                 <p>
-                    Sie oder Ihr Browser hat eine Datei gefordert, die uns nicht bekannt ist.<br/>
-                    Kehren Sie bitte zur Hauptseite zurück.
+                    <?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT404VIEW_BODY_MAIN_PARAGRAPH);
+                    ?>
                 </p>
             </article>
         </main>

@@ -319,7 +319,6 @@ class LobbyLogic
         if ($preparedStatement->execute($data)) {
             if ($preparedStatement->rowCount() > 0) {
                 $fetched_rows = $preparedStatement->fetchAll(\PDO::FETCH_ASSOC);
-                echo "ok";print_r($fetched_rows);echo"ok";
                 $selected_question = $fetched_rows[rand(0, count($fetched_rows) - 1)]["id"];
 
                 $preparedStatement1 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
