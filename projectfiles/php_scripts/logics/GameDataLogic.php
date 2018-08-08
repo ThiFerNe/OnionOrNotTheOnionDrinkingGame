@@ -136,4 +136,23 @@ class GameDataLogic
         }
         return NULL;
     }
+
+    public static function countWithMinimumScore(int $minimumScore) {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT COUNT(*) AS anzahl FROM `gamedata` WHERE (`upvotes` - `downvotes`) >= ?;"
+        );
+        if($preparedStatement->execute(array($minimumScore))) {
+            if($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["anzahl"];
+            }
+        }
+        return NULL;
+    }
+
+    public static function getScoreByGameDataId(int $gamedataid) {
+        $downvotes = self::getDownvotesByGameDataId($gamedataid);
+        $upvotes = self::getUpvotesByGameDataId($gamedataid);
+        return $upvotes - $downvotes;
+    }
 }

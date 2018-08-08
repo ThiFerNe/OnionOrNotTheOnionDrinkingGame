@@ -29,15 +29,21 @@ class ResetView extends AbstractView
         ?>
         <main>
             <section>
-                <h2>Reset This Page To Default</h2>
+                <h2><?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_RESETVIEW_BODY_MAIN_HEADLINE);
+                    ?></h2>
                 <?php
-                    \logics\FrontEndRequestAcrossMessagesLogic::insertHTML();
+                \logics\FrontEndRequestAcrossMessagesLogic::insertHTML();
                 ?>
-                <p>You can reset this page to default. Do you want to?</p>
+                <p><?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION);
+                    ?></p>
                 <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>reset" method="POST">
                     <input type="hidden" name="csrf_value"
                            value="<?php echo $_RESPONSE[\controllers\ResetController::PREFIX . \controllers\ResetController::SUFFIX_CSRF_VALUE]; ?>"/>
-                    <input type="submit" name="reset" value="DO IT! RESET EVERYTHING!"/>
+                    <input type="submit" name="reset" value="<?php
+                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE);
+                    ?>"/>
                 </form>
             </section>
         </main>

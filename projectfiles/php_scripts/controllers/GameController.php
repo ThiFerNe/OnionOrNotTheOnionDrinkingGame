@@ -15,8 +15,6 @@ require_once(__DIR__ . "/../logics/LobbyUsedGamedataLogic.php");
 
 use \logics\FrontEndRequestAcrossMessagesLogic as FERequestAcrossMLogic;
 use \helper\LogHelper as LOG;
-use logics\GameDataLogic;
-use logics\LobbyLogic;
 
 class GameController extends AbstractController
 {
@@ -197,7 +195,7 @@ class GameController extends AbstractController
 
             // Clear data from Sessions
             $users_in_lobby = \logics\SessionLogic::getUserSessionIdsByLobbyId($lobbyid);
-            foreach($users_in_lobby as $user_in_lobby) {
+            foreach ($users_in_lobby as $user_in_lobby) {
                 \logics\SessionLogic::setPointsByUserSessionId($user_in_lobby, 0);
                 \logics\SessionLogic::setActualAnswerIsOnionByUserSessionId($user_in_lobby, 0);
             }
@@ -207,6 +205,11 @@ class GameController extends AbstractController
             \logics\LobbyLogic::setCurrentStateOnByLobbyId($lobbyid, time());
 
             // REDIRECT
+            return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
+        }
+
+        // If the request did not be a GET, redirect!
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
             return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
         }
 
@@ -263,6 +266,7 @@ class GameController extends AbstractController
                     $current_game_data = \logics\LobbyLogic::getCurrentGameDataByLobbyId($lobbyid);
                     $_RESPONSE[self::PREFIX . self::SUFFIX_QUESTION_HEADLINE] =
                         \logics\GameDataLogic::getHeadlineByGameDataId($current_game_data);
+                    $_RESPONSE[self::PREFIX . self::SUFFIX_QUESTION_ID] = \logics\LobbyLogic::getCurrentGameDataByLobbyId($lobbyid);
                     $_RESPONSE[self::PREFIX . self::SUFFIX_QUESTION_IS_ONION] =
                         \logics\GameDataLogic::isOnionByGameDataId($current_game_data);
                     $_RESPONSE[self::PREFIX . self::SUFFIX_QUESTION_HYPERLINK] =
@@ -283,7 +287,7 @@ class GameController extends AbstractController
                     break;
                 case \logics\LobbyLogic::STATE_END:
                     $endRanking = \logics\LobbyLogic::getEndRankingByLobbyId($lobbyid);
-                    if($endRanking !== NULL) {
+                    if ($endRanking !== NULL) {
                         $_RESPONSE[self::PREFIX . self::SUFFIX_END_RANKING] = json_decode($endRanking, TRUE);
                     } else {
                         $_RESPONSE[self::PREFIX . self::SUFFIX_END_RANKING] = array();

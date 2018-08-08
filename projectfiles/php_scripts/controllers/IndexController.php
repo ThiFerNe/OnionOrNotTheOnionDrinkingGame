@@ -71,7 +71,7 @@ class IndexController extends AbstractController
                     }
                 }
                 $timer_wanted = NULL;
-                if (empty($_POST["timer_wanted"])) {
+                if (!isset($_POST["timer_wanted"]) || strlen($_POST["timer_wanted"]) <= 0) {
                     $timer_wanted = -1;
                 } else {
                     $timer_wanted = intval($_POST["timer_wanted"]);
@@ -92,7 +92,7 @@ class IndexController extends AbstractController
                     }
                 }
                 $max_questions = NULL;
-                if (empty($_POST["max_questions"])) {
+                if (!isset($_POST["max_questions"]) || strlen($_POST["max_questions"]) <= 0) {
                     $max_questions = -1;
                 } else {
                     $max_questions = intval($_POST["max_questions"]);
@@ -105,12 +105,26 @@ class IndexController extends AbstractController
                         );
                     }
                 }
+                $minimum_score = NULL;
+                if (!isset($_POST["minimum_score"]) || strlen($_POST["minimum_score"]) <= 0) {
+                    $minimum_score = NULL;
+                } else {
+                    $minimum_score = intval($_POST["minimum_score"]);
+                    if ($_POST["minimum_score"] !== strval($minimum_score)) {
+                        $error_occurred = TRUE;
+                        FERequestAcrossMLogic::appendMessage(
+                            FERequestAcrossMLogic::TYPE_ERROR,
+                            FERequestAcrossMLogic::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID,
+                            self::PREFIX
+                        );
+                    }
+                }
 
                 if ($error_occurred) {
                     return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix());
                 } else {
                     if ($create_lobby) {
-                        if(($invite_code = \logics\LobbyLogic::createLobby($timer_wanted, $max_questions))===NULL) {
+                        if(($invite_code = \logics\LobbyLogic::createLobby($timer_wanted, $max_questions, $minimum_score))===NULL) {
                             FERequestAcrossMLogic::appendMessage(
                                 FERequestAcrossMLogic::TYPE_ERROR,
                                 FERequestAcrossMLogic::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED,

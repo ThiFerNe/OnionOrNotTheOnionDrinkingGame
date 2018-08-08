@@ -33,6 +33,8 @@ class FrontEndRequestAcrossMessagesLogic
     public const MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS = "Message_GameController_Error_Invalid_Question_Id_Not_Exists";
     public const MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER = "Message_GameController_Error_Invalid_Question_Id_No_Number";
     public const MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID = "Message_GameController_Error_Missing_Question_Id";
+    public const MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID = "Message_IndexController_Error_Questions_Invalid";
+    public const MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID = "Message_IndexController_Error_Minimum_Score_Invalid";
 
     public const MESSAGEDEFAULT_INTERNAL_SERVER_ERROR = "An internal server error happened.";
 
@@ -51,7 +53,9 @@ class FrontEndRequestAcrossMessagesLogic
         self::MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
         self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
         self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
-        self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR
+        self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID => self::MESSAGEDEFAULT_INTERNAL_SERVER_ERROR,
+        self::MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID => "The number of questions has been invalid! Please use a number!",
+        self::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID => "The minimum score has been invalid! Please use a number!"
     );
 
     public static function appendMessage(string $type, string $message, string $sourcePrefix)

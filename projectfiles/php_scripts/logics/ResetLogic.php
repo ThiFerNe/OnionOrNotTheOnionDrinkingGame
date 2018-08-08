@@ -113,6 +113,7 @@ class ResetLogic
               `current_gamedata` int(11),
               `max_questions` int(11) NOT NULL,
               `current_questions` int(11) NOT NULL DEFAULT 0,
+              `minimum_score` int(11) DEFAULT NULL,
               `timer` int(11) NOT NULL DEFAULT '-1',
               `end_ranking` text CHARACTER SET utf8
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",

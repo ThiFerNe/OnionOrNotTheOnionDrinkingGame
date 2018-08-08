@@ -4,6 +4,8 @@ namespace helper;
 
 require_once(__DIR__ . "/../views/AbstractView.php");
 require_once(__DIR__ . "/../helper/LogHelper.php");
+require_once(__DIR__ . "/../logics/LocalizationLogic.php");
+require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
 require_once("VariousHelper.php");
 
 use \helper\VariousHelper as VariousHlp;
@@ -34,11 +36,11 @@ public static function printPreHeader(bool $isRestrictedView = FALSE)
     public static function printPostHeader(bool $isRestrictedView = FALSE)
     {
     ?>
-    <title>Onion Or Not The Onion Drinking Game</title>
+    <title><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT);?></title>
 </head>
 <body>
 <header>
-    <h1>Onion Or Not The Onion Drinking Game</h1>
+    <h1><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT);?></h1>
 </header>
 <?php
 }
@@ -50,6 +52,11 @@ public static function printFooter(bool $isRestrictedView = FALSE)
 {
 ?>
 <footer>
+    <nav>
+        <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>?lang=en">English / English</a>
+        -
+        <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>?lang=de">Deutsch / German</a>
+    </nav>
     <p id="footer_copyright">
         &copy; 2018 Tiquthon
     </p>

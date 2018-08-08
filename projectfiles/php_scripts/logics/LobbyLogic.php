@@ -19,17 +19,18 @@ class LobbyLogic
     public const STATE_AFTERMATH = 2;
     public const STATE_END = 3;
 
-    public static function createLobby(int $timerWanted, int $max_questions)
+    public static function createLobby(int $timerWanted, int $max_questions, $minimum_score)
     {
+        LOG::INFO("Creating new lobby with timerWanted:" . $timerWanted . "; max_questions: " . $max_questions. "; minimum_score: " . $minimum_score);
         $lobbycode = self::generateLobbyCode();
         if ($lobbycode === NULL) {
             return NULL;
         }
         $preparedStatement =
             \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`, `max_questions`) VALUES (?, ?, ?, ?, ?);"
+                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`, `max_questions`, `minimum_score`) VALUES (?, ?, ?, ?, ?, ?);"
             );
-        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted, $max_questions))) {
+        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted, $max_questions, $minimum_score))) {
             return $lobbycode;
         }
         return NULL;
@@ -233,6 +234,20 @@ class LobbyLogic
         return $preparedStatement->execute(array($currentQuestions, $lobbyid));
     }
 
+    public static function getMinimumScoreByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `minimum_score` FROM `lobby` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["minimum_score"];
+            }
+        }
+        return NULL;
+    }
+
     public static function getTimerByLobbyId(int $lobbyid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
@@ -289,12 +304,22 @@ class LobbyLogic
 
     public static function fetchNewQuestionForLobbyByLobbyId(int $lobbyid)
     {
-        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
-            "SELECT `id` FROM `gamedata` WHERE `id` NOT IN (SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ?);"
-        );
-        if ($preparedStatement->execute(array($lobbyid))) {
+        $minimum_score = self::getMinimumScoreByLobbyId($lobbyid);
+        if($minimum_score !== NULL) {
+            $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                "SELECT `id` FROM `gamedata` WHERE (`upvotes` - `downvotes`) >= ? AND `id` NOT IN (SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ?);"
+            );
+            $data = array(intval($minimum_score), $lobbyid);
+        } else {
+            $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                "SELECT `id` FROM `gamedata` WHERE `id` NOT IN (SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ?);"
+            );
+            $data = array($lobbyid);
+        }
+        if ($preparedStatement->execute($data)) {
             if ($preparedStatement->rowCount() > 0) {
                 $fetched_rows = $preparedStatement->fetchAll(\PDO::FETCH_ASSOC);
+                echo "ok";print_r($fetched_rows);echo"ok";
                 $selected_question = $fetched_rows[rand(0, count($fetched_rows) - 1)]["id"];
 
                 $preparedStatement1 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
@@ -312,7 +337,12 @@ class LobbyLogic
 
     public static function hasLobbyUsedEveryQuestion(int $lobbyid)
     {
-        $gameDataCount = GameDataLogic::count();
+        $minimum_score = self::getMinimumScoreByLobbyId($lobbyid);
+        if($minimum_score !== NULL) {
+            $gameDataCount = GameDataLogic::countWithMinimumScore(intval($minimum_score));
+        } else {
+            $gameDataCount = GameDataLogic::count();
+        }
         if ($gameDataCount === NULL) {
             return TRUE;
         }

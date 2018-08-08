@@ -8,7 +8,6 @@ require_once(__DIR__ . "/../integration/DatabaseIntegration.php");
 
 use \helper\LogHelper as LOG;
 
-
 class SessionLogic
 {
 
@@ -134,14 +133,16 @@ class SessionLogic
         return NULL;
     }
 
-    public static function setLastActiveByUserSessionId(string $usersessionid, int $lastActive) {
+    public static function setLastActiveByUserSessionId(string $usersessionid, int $lastActive)
+    {
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "UPDATE `session` SET `last_active` = ? WHERE `id` = ?;"
         );
         return $preparedStatement->execute(array($lastActive, $usersessionid));
     }
 
-    public static function setLastActiveByPhpSessionId(string $phpsessionid, int $lastActive) {
+    public static function setLastActiveByPhpSessionId(string $phpsessionid, int $lastActive)
+    {
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "UPDATE `session` SET `last_active` = ? WHERE `session_id` = ?;"
         );
@@ -191,14 +192,16 @@ class SessionLogic
         return NULL;
     }
 
-    public static function setPointsByUserSessionId(int $usersessionid, int $points) {
+    public static function setPointsByUserSessionId(int $usersessionid, int $points)
+    {
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "UPDATE `session` SET `points` = ? WHERE `id` = ?;"
         );
         return $preparedStatement->execute(array($points, $usersessionid));
     }
 
-    public static function addPointsByUserSessionId(int $usersessionid, int $points) {
+    public static function addPointsByUserSessionId(int $usersessionid, int $points)
+    {
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "UPDATE `session` SET `points` = `points` + ? WHERE `id` = ?;"
         );
@@ -258,7 +261,7 @@ class SessionLogic
     public static function removeSessionByPhpSessionId(string $phpsessionid)
     {
         $usersessionid = self::getUserSessionIdByPhpSessionId($phpsessionid);
-        if($usersessionid === NULL) {
+        if ($usersessionid === NULL) {
             return NULL;
         }
         return self::removeSessionByUserSessionId($usersessionid);
@@ -295,11 +298,41 @@ class SessionLogic
         return FALSE;
     }
 
-    public static function handleDownvoteByPhpSessionId(string $sessionid, int $gid) {
-
+    public static function handleDownvoteByPhpSessionId(string $phpsessionid, int $gid)
+    {
+        self::handleDownvoteByUserSessionId(self::getUserSessionIdByPhpSessionId($phpsessionid), $gid);
     }
 
-    public static function handleUpvoteByPhpSessionId(string $sessionid, int $gid) {
+    public static function handleDownvoteByUserSessionId(int $usersessionid, int $gid)
+    {
+        if(SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
+            if(SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
+                GameDataLogic::decreaseUpvotesByGameDataId($gid);
+                GameDataLogic::increaseDownvotesByGameDataId($gid);
+                SessionHasVotedForGameDataLogic::update($gid, $usersessionid, 0);
+            }
+        } else {
+            GameDataLogic::increaseDownvotesByGameDataId($gid);
+            SessionHasVotedForGameDataLogic::add($gid, $usersessionid, 0);
+        }
+    }
 
+    public static function handleUpvoteByPhpSessionId(string $phpsessionid, int $gid)
+    {
+        self::handleUpvoteByUserSessionId(self::getUserSessionIdByPhpSessionId($phpsessionid), $gid);
+    }
+
+    public static function handleUpvoteByUserSessionId(int $usersessionid, int $gid)
+    {
+        if(SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
+            if(!SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
+                GameDataLogic::decreaseDownvotesByGameDataId($gid);
+                GameDataLogic::increaseUpvotesByGameDataId($gid);
+                SessionHasVotedForGameDataLogic::update($gid, $usersessionid, 1);
+            }
+        } else {
+            GameDataLogic::increaseUpvotesByGameDataId($gid);
+            SessionHasVotedForGameDataLogic::add($gid, $usersessionid, 1);
+        }
     }
 }

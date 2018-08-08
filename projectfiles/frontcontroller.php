@@ -37,6 +37,8 @@ require_once("php_scripts/views/ErrorDocument303View.php");
 
 require_once("php_scripts/logics/ResetLogic.php");
 require_once("php_scripts/logics/UpdateLogic.php");
+require_once("php_scripts/logics/LocalizationLogic.php");
+require_once("php_scripts/logics/further/LocalizationStore.php");
 
 require_once("php_scripts/helper/VariousHelper.php");
 
@@ -68,6 +70,28 @@ $controller["/exit"] = "ExitController";
  */
 
 $requestTopUri = \helper\VariousHelper::getRequestTopUri();
+
+/*
+ * Setup language:
+ */
+if (isset($_GET["lang"])) {
+    $language = strtolower($_GET["lang"]);
+
+    switch ($language) {
+        case "de":
+            \logics\LocalizationLogic::setCurrentLocale(\logics\further\LocalizationStore::LOCALE_GERMAN);
+            break;
+        case "en":
+        default:
+            \logics\LocalizationLogic::setCurrentLocale(\logics\further\LocalizationStore::LOCALE_ENGLISH);
+    }
+
+    LOG::TRACE("Language has been changed");
+    header('Location: ' . \helper\VariousHelper::getUrlPrefix(), true, 303);
+    $_RESPONSE[\views\ErrorDocument303View::PREFIX . \views\ErrorDocument303View::REFER_TO] = \helper\VariousHelper::getUrlPrefix();
+    (new \views\ErrorDocument303View())->print();
+    exit;
+}
 
 /*
  * At first check if this website is set up.

@@ -156,25 +156,25 @@ class UpdateLogic
     {
         LOG::DEBUG("Going to switch to aftermath for lobby " . strval($lobbyid));
         // GIVE POINTS TO EVERYONE
-        $currentIsOnion = \logics\GameDataLogic::isOnionByGameDataId(\logics\LobbyLogic::getCurrentGameDataByLobbyId($lobbyid));
+        $currentIsOnion = GameDataLogic::isOnionByGameDataId(LobbyLogic::getCurrentGameDataByLobbyId($lobbyid));
         LOG::DEBUG("In lobby " . strval($lobbyid) . " the curren is " . ($currentIsOnion ? " " : "not ") . "onion");
-        $userids = \logics\SessionLogic::getUserSessionIdsByLobbyId($lobbyid);
+        $userids = SessionLogic::getUserSessionIdsByLobbyId($lobbyid);
         if ($userids !== NULL) {
             $last_right_user = NULL;
             $user_count = 0;
             $right_count = 0;
             foreach ($userids as $userid) {
-                if(\logics\SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                     continue;
                 }
                 $user_count++;
-                $actual_answer = \logics\SessionLogic::getActualAnswerIsOnionByUserSessionId($userid);
+                $actual_answer = SessionLogic::getActualAnswerIsOnionByUserSessionId($userid);
                 if (
                     ($actual_answer == -1 && $currentIsOnion == FALSE) ||
                     ($actual_answer == 1 && $currentIsOnion == TRUE)
                 ) {
                     LOG::DEBUG($userid . " got it right with answer " . $actual_answer . " in lobby " . strval($lobbyid));
-                    \logics\SessionLogic::addPointsByUserSessionId($userid, 100);
+                    SessionLogic::addPointsByUserSessionId($userid, 100);
                     $right_count++;
                     $last_right_user = $userid;
                 } else {
@@ -183,16 +183,16 @@ class UpdateLogic
             }
             if ($right_count == 1 && $user_count > 1) {
                 // Reward best user extra
-                LOG::DEBUG($userid . " was the only one who got it right in lobby " . strval($lobbyid));
-                \logics\SessionLogic::addPointsByUserSessionId($last_right_user, 50);
+                LOG::DEBUG($last_right_user . " was the only one who got it right in lobby " . strval($lobbyid));
+                SessionLogic::addPointsByUserSessionId($last_right_user, 50);
             }
 
             $points_array = array();
             foreach ($userids as $userid) {
-                if(\logics\SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                     continue;
                 }
-                array_push($points_array, \logics\SessionLogic::getPointsByUserSessionId($userid));
+                array_push($points_array, SessionLogic::getPointsByUserSessionId($userid));
             }
             $points_array = array_unique($points_array, SORT_NUMERIC);
             sort($points_array, SORT_NUMERIC);
@@ -203,12 +203,12 @@ class UpdateLogic
                 $current_points = $points_array[$i];
                 $users_with_that_points = 0;
                 foreach ($userids as $userid) {
-                    if(\logics\SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                    if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                         continue;
                     }
-                    if ($current_points == \logics\SessionLogic::getPointsByUserSessionId($userid)) {
+                    if ($current_points == SessionLogic::getPointsByUserSessionId($userid)) {
                         $ranking[$current_rank_counter] = array(
-                            "name" => \logics\SessionLogic::getUsernameByUserSessionId($userid),
+                            "name" => SessionLogic::getUsernameByUserSessionId($userid),
                             "rank" => $current_rank,
                             "points" => $current_points
                         );
@@ -218,7 +218,7 @@ class UpdateLogic
                 }
                 $current_rank += $users_with_that_points;
             }
-            \logics\LobbyLogic::setEndRankingByLobbyId($lobbyid, json_encode($ranking));
+            LobbyLogic::setEndRankingByLobbyId($lobbyid, json_encode($ranking));
         }
         // CHANGE STATE
         LobbyLogic::setCurrentStateByLobbyId($lobbyid, LobbyLogic::STATE_AFTERMATH);
@@ -229,10 +229,10 @@ class UpdateLogic
     {
         LOG::DEBUG("Going to switch to new question for lobby " . strval($lobbyid));
         // RESET ANSWERS
-        $userids = \logics\SessionLogic::getUserSessionIdsByLobbyId($lobbyid);
+        $userids = SessionLogic::getUserSessionIdsByLobbyId($lobbyid);
         if ($userids !== NULL) {
             foreach ($userids as $userid) {
-                \logics\SessionLogic::setActualAnswerIsOnionByUserSessionId($userid, 0);
+                SessionLogic::setActualAnswerIsOnionByUserSessionId($userid, 0);
             }
         }
         // Here no time will be waited but the next question or END will be switched to
