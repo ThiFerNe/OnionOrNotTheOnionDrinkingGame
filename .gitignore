@@ -1,3 +1,4 @@
 **/.idea/*
 **/logs/*
 **/website_is_setup
+gather_from_reddit/venv/*
