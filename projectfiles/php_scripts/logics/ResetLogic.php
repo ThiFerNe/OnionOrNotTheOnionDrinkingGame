@@ -47,19 +47,21 @@ class ResetLogic
     {
         $full_contents = file_get_contents($filepath);
         if ($full_contents === FALSE) {
+            LOG::FATAL("Could not load file \"" . $filepath . "\"");
             return FALSE;
         }
         $full_data = json_decode($full_contents, TRUE);
         if ($full_data === NULL) {
+            LOG::FATAL("Could not decode JSON from file \"" . $filepath . "\"");
             return FALSE;
         }
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
             "INSERT INTO `gamedata` (" .
             "`reddit_id`, `headline`, `is_onion`, `subreddit`, `subreddit_id`, `selftext`, " .
-            "`hyperlink`, `reddit_permalink`, `over_18`, `further_explanation`, `picture`, " .
+            "`hyperlink`, `reddit_permalink`, `over_18`, `picture`, " .
             "`picture_height`, `picture_width`, `thumbnail`, `thumbnail_width`, `reddit_upvotes`, " .
             "`reddit_downvotes`, `reddit_score`" .
-            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
         );
         $preparedStatement2 = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
             "SELECT MAX(`id`) AS `mid` FROM `gamedata`;"
@@ -75,26 +77,23 @@ class ResetLogic
                 $current_data["url"],
                 $current_data["permalink"],
                 $current_data["over_18"] === TRUE ? 1 : 0,
-                NULL,
                 $current_data["image_url"],
-                $current_data["image_height"],
-                $current_data["image_width"],
+                array_key_exists("image_height", $current_data) && $current_data["image_height"] !== NULL ? $current_data["image_height"] : -1,
+                array_key_exists("image_width", $current_data) && $current_data["image_width"] !== NULL ? $current_data["image_width"] : -1,
                 $current_data["thumbnail"],
-                $current_data["thumbnail_width"],
+                array_key_exists("thumbnail_width", $current_data) && $current_data["thumbnail_width"] !== NULL ? $current_data["thumbnail_width"] : -1,
                 $current_data["ups"],
                 $current_data["downs"],
                 $current_data["score"]
             ))) {
+                $errInf = $preparedStatement->errorInfo();
+                LOG::FATAL("Could not insert \"" . $current_data["id"] . "\" from \"" . $filepath .
+                    "\" into database \"" . json_encode($current_data) . "\" with error \"" . $errInf[0] . "\" + \""
+                     . $errInf[1] . "\" + \"" . $errInf[2] . "\"");
                 return FALSE;
             }
-            if (!$preparedStatement2->execute(array())) {
-                return FALSE;
-            }
-            if ($preparedStatement2->rowCount() <= 0) {
-                return FALSE;
-            }
-            $gid = $preparedStatement2->fetch(\PDO::FETCH_ASSOC)["mid"];
         }
+        return TRUE;
     }
 
     public static function insertQuestions()
