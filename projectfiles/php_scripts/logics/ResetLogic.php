@@ -43,65 +43,47 @@ class ResetLogic
         return FALSE;
     }
 
-    public static function insertQuestions()
+    public static function insertQuestionsFile(string $filepath)
     {
-        $questions = array(
-            array(
-                self::HEADLINE => "Boyfriend Ready To Take Relationship To Previous Level",
-                self::IS_ONION => 1,
-                self::HYPERLINK => "https://local.theonion.com/boyfriend-ready-to-take-relationship-to-previous-level-1819568844",
-                self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
-                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--mGgZC5ev--/c_fit,f_auto,fl_progressive,q_80,w_470/iggnu22540u3xquulugb.jpg",
-                self::LOCALIZATION => array(
-                    array(
-                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
-                        self::HEADLINE => "Fester Freund ist bereit die Beziehung auf die vorherige Stufe zu bringen",
-                        self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN"
-                    )
-                )
-            ),
-            array(
-                self::HEADLINE => "Man grieved at wrong grave for 30 years due to misplaced headstone",
-                self::IS_ONION => 0,
-                self::HYPERLINK => "https://www.bbc.com/news/uk-england-manchester-45111652",
-                self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN!!",
-                self::PICTURE => "https://ichef.bbci.co.uk/news/660/cpsprodpb/37A7/production/_102874241_georgesalt.jpg",
-                self::LOCALIZATION => array(
-                    array(
-                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
-                        self::HEADLINE => "Mann hat 30 Jahre lang aufgrund eines falsch gesetzten Grabsteins am falschen Grab getrauert",
-                        self::FURTHER_EXPLANATION => "EXPLAIIIIIIIN"
-                    )
-                )
-            ),
-            array(
-                self::HEADLINE => "Climate Researchers Warn Only Hope For Humanity Now Lies In Possibility They Making All Of This Up",
-                self::IS_ONION => 1,
-                self::HYPERLINK => "https://www.theonion.com/climate-researchers-warn-only-hope-for-humanity-now-lie-1828171232",
-                self::FURTHER_EXPLANATION => "EXPLAIN!",
-                self::PICTURE => "https://i.kinja-img.com/gawker-media/image/upload/s--y7sD2HrQ--/c_scale,f_auto,fl_progressive,q_80,w_800/dqxcvdc7drqhz0bifa1x.jpg",
-                self::LOCALIZATION => array(
-                    array(
-                        self::LOCALE => \logics\further\LocalizationStore::LOCALE_GERMAN_SHORT,
-                        self::HEADLINE => "Klimaforcher warnen die einzige Hoffnung für die Menschheit läge nun darin, dass sie sich das ganze nur ausgedacht hätten",
-                        self::FURTHER_EXPLANATION => "EXPLAIN"
-                    )
-                )
-            )
-        );
+        $full_contents = file_get_contents($filepath);
+        if ($full_contents === FALSE) {
+            return FALSE;
+        }
+        $full_data = json_decode($full_contents, TRUE);
+        if ($full_data === NULL) {
+            return FALSE;
+        }
         $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-            "INSERT INTO `gamedata` (`headline`, `is_onion`, `hyperlink`, `further_explanation`, `picture`) VALUES (?, ?, ?, ?, ?);"
+            "INSERT INTO `gamedata` (" .
+            "`reddit_id`, `headline`, `is_onion`, `subreddit`, `subreddit_id`, `selftext`, " .
+            "`hyperlink`, `reddit_permalink`, `over_18`, `further_explanation`, `picture`, " .
+            "`picture_height`, `picture_width`, `thumbnail`, `thumbnail_width`, `reddit_upvotes`, " .
+            "`reddit_downvotes`, `reddit_score`" .
+            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
         );
         $preparedStatement2 = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
             "SELECT MAX(`id`) AS `mid` FROM `gamedata`;"
         );
-        foreach ($questions as $question) {
+        foreach ($full_data as $current_data) {
             if (!$preparedStatement->execute(array(
-                $question[self::HEADLINE],
-                $question[self::IS_ONION],
-                $question[self::HYPERLINK],
-                $question[self::FURTHER_EXPLANATION],
-                $question[self::PICTURE]
+                $current_data["id"],
+                $current_data["title"],
+                $current_data["subreddit"] == "TheOnion",
+                $current_data["subreddit"],
+                $current_data["subreddit_id"],
+                $current_data["selftext"],
+                $current_data["url"],
+                $current_data["permalink"],
+                $current_data["over_18"] === TRUE ? 1 : 0,
+                NULL,
+                $current_data["image_url"],
+                $current_data["image_height"],
+                $current_data["image_width"],
+                $current_data["thumbnail"],
+                $current_data["thumbnail_width"],
+                $current_data["ups"],
+                $current_data["downs"],
+                $current_data["score"]
             ))) {
                 return FALSE;
             }
@@ -112,16 +94,16 @@ class ResetLogic
                 return FALSE;
             }
             $gid = $preparedStatement2->fetch(\PDO::FETCH_ASSOC)["mid"];
-            foreach ($question[self::LOCALIZATION] as $current_localization) {
-                if(!\logics\GameDataLocalizationLogic::add(
-                    $gid,
-                    $current_localization[self::LOCALE],
-                    $current_localization[self::HEADLINE],
-                    $current_localization[self::FURTHER_EXPLANATION]
-                )) {
-                    return FALSE;
-                }
-            }
+        }
+    }
+
+    public static function insertQuestions()
+    {
+        if (self::insertQuestionsFile(__DIR__ . '/../data/TheOnion.json') === FALSE) {
+            return FALSE;
+        }
+        if (self::insertQuestionsFile(__DIR__ . '/../data/NotTheOnion.json') === FALSE) {
+            return FALSE;
         }
         return TRUE;
     }
@@ -140,13 +122,26 @@ class ResetLogic
             "DROP TABLE `session_has_voted_for_gamedata`;",
             "CREATE TABLE `gamedata` (
               `id` int(11) NOT NULL,
+              `reddit_id` varchar(6) NOT NULL,
               `headline` text CHARACTER SET utf8 NOT NULL,
               `is_onion` tinyint(1) NOT NULL,
+              `subreddit` text CHARACTER SET utf8,
+              `subreddit_id` varchar(9) NOT NULL,
+              `selftext` text CHARACTER SET utf8,
               `hyperlink` text CHARACTER SET utf8,
+              `reddit_permalink` text CHARACTER SET utf8,
+              `over_18` tinyint(1) NOT NULL DEFAULT '0',
               `further_explanation` text CHARACTER SET utf8,
               `picture` varchar(256) DEFAULT NULL,
+              `picture_height` int(11) NOT NULL DEFAULT '-1',
+              `picture_width` int(11) NOT NULL DEFAULT '-1',
+              `thumbnail` varchar(256) DEFAULT NULL,
+              `thumbnail_width` int(11) NOT NULL DEFAULT '-1',
               `upvotes` bigint(20) NOT NULL DEFAULT '0',
-              `downvotes` bigint(20) NOT NULL DEFAULT '0'
+              `downvotes` bigint(20) NOT NULL DEFAULT '0',
+              `reddit_upvotes` bigint(20) NOT NULL DEFAULT '0',
+              `reddit_downvotes` bigint(20) NOT NULL DEFAULT '0',
+              `reddit_score` bigint(20) NOT NULL DEFAULT '0'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `gamedata`
               ADD PRIMARY KEY (`id`);",
