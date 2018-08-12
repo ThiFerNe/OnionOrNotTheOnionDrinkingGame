@@ -21,16 +21,16 @@ class LobbyLogic
 
     public static function createLobby(int $timerWanted, int $max_questions, $minimum_score)
     {
-        LOG::INFO("Creating new lobby with timerWanted:" . $timerWanted . "; max_questions: " . $max_questions. "; minimum_score: " . $minimum_score);
+        LOG::INFO("Creating new lobby with timerWanted:" . $timerWanted . "; max_questions: " . $max_questions . "; minimum_score: " . $minimum_score);
         $lobbycode = self::generateLobbyCode();
         if ($lobbycode === NULL) {
             return NULL;
         }
         $preparedStatement =
             \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`, `max_questions`, `minimum_score`) VALUES (?, ?, ?, ?, ?, ?);"
+                "INSERT INTO `lobby` (`lobbycode`, `created_on`, `last_active`, `timer`, `max_questions`, `minimum_score`, `last_time_max_question_use_count`) VALUES (?, ?, ?, ?, ?, ?, ?);"
             );
-        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted, $max_questions, $minimum_score))) {
+        if ($preparedStatement->execute(array($lobbycode, time(), time(), $timerWanted, $max_questions, $minimum_score, 0))) {
             return $lobbycode;
         }
         return NULL;
@@ -122,6 +122,28 @@ class LobbyLogic
             "UPDATE `lobby` SET `last_active` = ? WHERE `id` = ?;"
         );
         return $preparedStatement->execute(array($lastActive, $lobbyid));
+    }
+
+    public static function getLastTimeMaxQuestionUseCountByLobbyId(int $lobbyid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `last_time_max_question_use_count` FROM `lobby` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["last_time_max_question_use_count"];
+            }
+        }
+        return NULL;
+    }
+
+    public static function setLastTimeMaxQuestionUseCountByLobbyId(int $lobbyid, int $lastTimeMaxQUestionUseCount)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `lobby` SET `last_time_max_question_use_count` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($lastTimeMaxQUestionUseCount, $lobbyid));
     }
 
     public static function getCurrentStateByLobbyId(int $lobbyid)
@@ -305,16 +327,35 @@ class LobbyLogic
     public static function fetchNewQuestionForLobbyByLobbyId(int $lobbyid)
     {
         $minimum_score = self::getMinimumScoreByLobbyId($lobbyid);
-        if($minimum_score !== NULL) {
-            $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
-                "SELECT `id` FROM `gamedata` WHERE (`upvotes` - `downvotes`) >= ? AND `id` NOT IN (SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ?);"
-            );
-            $data = array(intval($minimum_score), $lobbyid);
+        if ($minimum_score !== NULL) {
+            if (self::hasLobbyUsedEveryQuestion($lobbyid)) {
+                $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                    "SELECT `id` FROM `gamedata` WHERE (`upvotes` - `downvotes`) >= ?;"
+                );
+                $data = array(intval($minimum_score));
+            } else {
+                $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                    "SELECT `id` FROM `gamedata` WHERE (`upvotes` - `downvotes`) >= ? AND `id` NOT IN (" .
+                    "SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ? AND `use_count` = (" .
+                    "SELECT MAX(`use_count`) FROM `lobby_used_gamedata` WHERE `lid` = ?" .
+                    ")" . ");"
+                );
+                $data = array(intval($minimum_score), $lobbyid, $lobbyid);
+            }
         } else {
-            $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
-                "SELECT `id` FROM `gamedata` WHERE `id` NOT IN (SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ?);"
-            );
-            $data = array($lobbyid);
+            if (self::hasLobbyUsedEveryQuestion($lobbyid)) {
+                $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                    "SELECT `id` FROM `gamedata` WHERE `id`;"
+                );
+                $data = array();
+            } else {
+                $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                    "SELECT `id` FROM `gamedata` WHERE `id` NOT IN (" .
+                    "SELECT `gid` AS id FROM `lobby_used_gamedata` WHERE `lid` = ? AND `use_count` = (" .
+                    "SELECT MAX(`use_count`) FROM `lobby_used_gamedata` WHERE `lid` = ?" .
+                    ")" . ");");
+                $data = array($lobbyid, $lobbyid);
+            }
         }
         if ($preparedStatement->execute($data)) {
             if ($preparedStatement->rowCount() > 0) {
@@ -324,11 +365,12 @@ class LobbyLogic
                 $preparedStatement1 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
                     "UPDATE `lobby` SET `current_gamedata` = ?, `current_questions` = `current_questions` + 1 WHERE `id` = ?;"
                 );
-                $preparedStatement2 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
-                    "INSERT INTO `lobby_used_gamedata` (`gid`, `lid`) VALUES (?, ?);"
-                );
-                return $preparedStatement1->execute(array($selected_question, $lobbyid)) &&
-                    $preparedStatement2->execute(array($selected_question, $lobbyid));
+                if($preparedStatement1->execute(array($selected_question, $lobbyid))) {
+                    LOG::TRACE("Before Use Count: " . \logics\LobbyUsedGamedataLogic::getUseCountByLobbyIdAndGameDataId($lobbyid, $selected_question));
+                    $result = \logics\LobbyUsedGamedataLogic::putIncreaseByLobby($lobbyid, $selected_question);
+                    LOG::TRACE("After Use Count: " . \logics\LobbyUsedGamedataLogic::getUseCountByLobbyIdAndGameDataId($lobbyid, $selected_question));
+                    return $result;
+                }
             }
         }
         return FALSE;
@@ -337,7 +379,7 @@ class LobbyLogic
     public static function hasLobbyUsedEveryQuestion(int $lobbyid)
     {
         $minimum_score = self::getMinimumScoreByLobbyId($lobbyid);
-        if($minimum_score !== NULL) {
+        if ($minimum_score !== NULL) {
             $gameDataCount = GameDataLogic::countWithMinimumScore(intval($minimum_score));
         } else {
             $gameDataCount = GameDataLogic::count();
@@ -349,7 +391,18 @@ class LobbyLogic
         if ($gameDataCount === NULL) {
             return TRUE;
         }
-        return $lobbyUsedGameDataCount >= $gameDataCount;
+        if ($lobbyUsedGameDataCount < $gameDataCount) {
+            return FALSE;
+        }
+        // Otherwise check the use count
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `gid`, COUNT(*) FROM `lobby_used_gamedata` WHERE `lid` = ? GROUP BY `use_count`;"
+        );
+        if ($preparedStatement->execute(array($lobbyid))) {
+            // If we get exactly one row which has been grouped, we can say, that every question has been used
+            return $preparedStatement->rowCount() == 1;
+        }
+        return FALSE;
     }
 
     public static function hasLobbyUsedEnoughQuestions(int $lobbyid)

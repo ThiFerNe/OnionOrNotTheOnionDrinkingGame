@@ -164,7 +164,7 @@ class UpdateLogic
             $user_count = 0;
             $right_count = 0;
             foreach ($userids as $userid) {
-                if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                if (SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                     continue;
                 }
                 $user_count++;
@@ -189,7 +189,7 @@ class UpdateLogic
 
             $points_array = array();
             foreach ($userids as $userid) {
-                if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                if (SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                     continue;
                 }
                 array_push($points_array, SessionLogic::getPointsByUserSessionId($userid));
@@ -203,7 +203,7 @@ class UpdateLogic
                 $current_points = $points_array[$i];
                 $users_with_that_points = 0;
                 foreach ($userids as $userid) {
-                    if(SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
+                    if (SessionLogic::isOnlyWatcherByUserSessionId($userid)) {
                         continue;
                     }
                     if ($current_points == SessionLogic::getPointsByUserSessionId($userid)) {
@@ -236,13 +236,22 @@ class UpdateLogic
             }
         }
         // Here no time will be waited but the next question or END will be switched to
-        if (LobbyLogic::hasLobbyUsedEveryQuestion($lobbyid) || LobbyLogic::hasLobbyUsedEnoughQuestions($lobbyid)) {
+        LOG::TRACE("Standing in front of heavy decision");
+        LOG::TRACE("> Has Lobby Used Every Question: " . (LobbyLogic::hasLobbyUsedEveryQuestion($lobbyid) === TRUE ? "true" : "false"));
+        LOG::TRACE("> Last Time Lobby Max Question Use Count: " . \logics\LobbyLogic::getLastTimeMaxQuestionUseCountByLobbyId($lobbyid));
+        LOG::TRACE("> Max Lobby Used Gamedata Use Count: " . \logics\LobbyUsedGamedataLogic::getMaxUseCountOrZeroByLobbyId($lobbyid));
+        LOG::TRACE("> Has Lobby Used Enough Questions: " . (LobbyLogic::hasLobbyUsedEnoughQuestions($lobbyid) === TRUE ? "true" : "false"));
+        if ((LobbyLogic::hasLobbyUsedEveryQuestion($lobbyid) && (
+                    \logics\LobbyLogic::getLastTimeMaxQuestionUseCountByLobbyId($lobbyid) != \logics\LobbyUsedGamedataLogic::getMaxUseCountOrZeroByLobbyId($lobbyid)
+                )) || LobbyLogic::hasLobbyUsedEnoughQuestions($lobbyid)) {
             LOG::DEBUG("Every question at lobby " . strval($lobbyid) . " has been answered");
             LobbyLogic::setCurrentStateByLobbyId($lobbyid, LobbyLogic::STATE_END);
             LobbyLogic::setCurrentStateOnByLobbyId($lobbyid, time());
         } else {
             LOG::DEBUG("NOT every question at lobby " . strval($lobbyid) . " has been answered");
-            LobbyLogic::fetchNewQuestionForLobbyByLobbyId($lobbyid);
+            if(!LobbyLogic::fetchNewQuestionForLobbyByLobbyId($lobbyid)) {
+                LOG::ERROR("Something failed while fetching a new question!");
+            }
             LobbyLogic::setCurrentStateByLobbyId($lobbyid, LobbyLogic::STATE_QUESTION);
             LobbyLogic::setCurrentStateOnByLobbyId($lobbyid, time());
         }

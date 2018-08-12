@@ -89,7 +89,7 @@ class ResetLogic
                 $errInf = $preparedStatement->errorInfo();
                 LOG::FATAL("Could not insert \"" . $current_data["id"] . "\" from \"" . $filepath .
                     "\" into database \"" . json_encode($current_data) . "\" with error \"" . $errInf[0] . "\" + \""
-                     . $errInf[1] . "\" + \"" . $errInf[2] . "\"");
+                    . $errInf[1] . "\" + \"" . $errInf[2] . "\"");
                 return FALSE;
             }
         }
@@ -168,6 +168,7 @@ class ResetLogic
               `max_questions` int(11) NOT NULL,
               `current_questions` int(11) NOT NULL DEFAULT 0,
               `minimum_score` int(11) DEFAULT NULL,
+              `last_time_max_question_use_count` int(11) NOT NULL,
               `timer` int(11) NOT NULL DEFAULT '-1',
               `end_ranking` text CHARACTER SET utf8
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
@@ -177,7 +178,8 @@ class ResetLogic
               MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;",
             "CREATE TABLE `lobby_used_gamedata` (
               `gid` int(11) NOT NULL,
-              `lid` int(11) NOT NULL
+              `lid` int(11) NOT NULL,
+              `use_count` int(11) NOT NULL DEFAULT 0
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "CREATE TABLE `session` (
               `id` int(11) NOT NULL,

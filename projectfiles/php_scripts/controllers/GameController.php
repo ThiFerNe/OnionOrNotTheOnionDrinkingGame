@@ -190,9 +190,11 @@ class GameController extends AbstractController
             \logics\LobbyLogic::unsetCurrentGameDataByLobbyId($lobbyid);
             \logics\LobbyLogic::unsetEndRankingByLobbyId($lobbyid);
             \logics\LobbyLogic::setCurrentQuestionsByLobbyId($lobbyid, 0);
+            \logics\LobbyLogic::setLastTimeMaxQuestionUseCountByLobbyId($lobbyid, \logics\LobbyUsedGamedataLogic::getMaxUseCountOrZeroByLobbyId($lobbyid));
 
             // Clear Lobby Used GameData
-            \logics\LobbyUsedGamedataLogic::deleteByLobby($lobbyid);
+            //UPDATE: NOT NEEDED, BECAUSE THE DATA WILL BE USED BY THE NEXT ROUND
+            //\logics\LobbyUsedGamedataLogic::deleteByLobby($lobbyid);
 
             // Clear data from Sessions
             $users_in_lobby = \logics\SessionLogic::getUserSessionIdsByLobbyId($lobbyid);

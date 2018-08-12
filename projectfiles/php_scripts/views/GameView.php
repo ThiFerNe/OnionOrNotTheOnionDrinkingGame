@@ -48,7 +48,16 @@ class GameView extends AbstractView
             <a href="<?php \helper\VariousHelper::printUrlPrefix() ?>exit"><?php
                 echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_EXIT_THE_GAME);
                 ?></a>
-            <?php FERequestAcrossMLogic::insertHTML(); ?>
+            <?php
+            if (!\logics\FrontEndRequestAcrossMessagesLogic::isEmpty()) {
+                ?>
+                <section id="main_section_frontend_messages"><?php
+                \logics\FrontEndRequestAcrossMessagesLogic::insertHTML(
+                    "", "msg-box-success",
+                    "msg-box-error", "msg-box-warn", "msg-box-info");
+                ?></section><?php
+            }
+            ?>
             <?php
             switch ($current_state) {
                 case \logics\LobbyLogic::STATE_START:
