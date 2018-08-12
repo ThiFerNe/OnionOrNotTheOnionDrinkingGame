@@ -2,3 +2,4 @@
 **/logs/*
 **/website_is_setup
 gather_from_reddit/venv/*
+projectfiles/php_scripts/integration/DatabaseConnectOverride.php
