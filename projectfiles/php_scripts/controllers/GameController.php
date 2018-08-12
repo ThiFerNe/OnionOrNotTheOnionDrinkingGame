@@ -189,6 +189,7 @@ class GameController extends AbstractController
             // Clear Current GameData and Ranking
             \logics\LobbyLogic::unsetCurrentGameDataByLobbyId($lobbyid);
             \logics\LobbyLogic::unsetEndRankingByLobbyId($lobbyid);
+            \logics\LobbyLogic::setCurrentQuestionsByLobbyId($lobbyid, 0);
 
             // Clear Lobby Used GameData
             \logics\LobbyUsedGamedataLogic::deleteByLobby($lobbyid);

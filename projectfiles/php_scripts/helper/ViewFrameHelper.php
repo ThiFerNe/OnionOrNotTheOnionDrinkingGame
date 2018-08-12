@@ -24,9 +24,11 @@ class ViewFrameHelper
 public static function printPreHeader(bool $isRestrictedView = FALSE)
 {
 ?><!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()); ?>">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="<?php VariousHlp::printUrlPrefix(); ?>favicon.png">
     <?php
     }
 
@@ -36,11 +38,16 @@ public static function printPreHeader(bool $isRestrictedView = FALSE)
     public static function printPostHeader(bool $isRestrictedView = FALSE)
     {
     ?>
-    <title><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT);?></title>
+    <title><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT); ?></title>
 </head>
 <body>
 <header>
-    <h1><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT);?></h1>
+    <div id="header_headline">
+        <?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT); ?>
+    </div>
+    <div id="header_subheadline">
+        <?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT); ?>
+    </div>
 </header>
 <?php
 }
@@ -52,7 +59,7 @@ public static function printFooter(bool $isRestrictedView = FALSE)
 {
 ?>
 <footer>
-    <nav>
+    <nav id="footer_links">
         <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>?lang=en">English / English</a>
         -
         <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>?lang=de">Deutsch / German</a>

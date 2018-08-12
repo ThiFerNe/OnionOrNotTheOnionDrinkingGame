@@ -28,24 +28,30 @@ class LocalizationStore
                 $output[self::ID_GENERAL_GAME_NAME] = "The Onion Oder Nicht The Onion Trinkspiel";
 
                 $output[self::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT] = $output[self::ID_GENERAL_GAME_NAME];
-                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT] = $output[self::ID_GENERAL_GAME_NAME];
+                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT] = "The Onion Oder Nicht The Onion";
+                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT] = "Trinkspiel";
 
                 $output[self::ID_INDEXVIEW_BODY_MAIN_GAME_DESCRIPTION] = " ist ein Online Spiel, in welchem dein Handy " .
                     "dein Controller ist. Erstell einfach eine Lobby und spiele. Zusätzlich kannst du einen großen " .
                     "Bildschirm nutzen, auf welchem jeder, der auf deiner ganze Party nicht mitspielen will, " .
                     "das Geschehen mitverfolgen kann.";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_PLACEHOLDER] = "Name";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_PLACEHOLDER] = "Spielername";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL] = "Ich will es einfach nur anschauen!";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_VALUE] = $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL];
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_PLACEHOLDER] = "Einladungscode";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Fragen - Leer lassen, wenn alle gewollt sind";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimaler Score der Fragen - Leer lassen, wenn alle gewollt sind";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer - Leer lassen, wenn alle gewollt sind";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Anzahl an Fragen";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn alle Fragen gewollt sind";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimaler Score der Fragen";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn es egal ist, wie gut eine Frage sein muss";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn kein Timer beim Beantworten erwünscht ist.";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_PARAGRAPH_FURTHER_GAME_START_EXPLANATION] =
                     "Mit keinem Einladungscode wird ein neues Spiel gestartet. Andernfalls wird dem Spiel mit dem Einladungscode beigetreten.";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "STARTEN";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN] = "BEITRETEN";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE] = "ERSTELLEN";
 
-                $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Setze diese Seite zurück";
+                $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Diese Seite zurücksetzen";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "Du kannst diese Seite zurücksetzen. Willst du das?";
                 $output[self::ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "TUE ES! SETZE ALLES ZURÜCK!";
 
@@ -117,23 +123,29 @@ class LocalizationStore
                 $output[self::ID_GENERAL_GAME_NAME] = "The Onion Or Not The Onion Drinking Game";
 
                 $output[self::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT] = $output[self::ID_GENERAL_GAME_NAME];
-                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT] = $output[self::ID_GENERAL_GAME_NAME];
+                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT] = "The Onion Or Not The Onion";
+                $output[self::ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT] = "Drinking Game";
 
                 $output[self::ID_INDEXVIEW_BODY_MAIN_GAME_DESCRIPTION] = " is a web game in which your mobile devices " .
                     "are your controllers. Just create a lobby and play. Furthermore you can host a screen which " .
                     "provides a view for rest of your party which doesn't want to play.";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_PLACEHOLDER] = "Name";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_PLACEHOLDER] = "Playername";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL] = "I just want to watch it!";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_VALUE] = $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL];
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_PLACEHOLDER] = "Invite Code";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Questions - Leave Blank if all are wished";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimum Score Of Questions - Leave Blank if all are wished";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer - Leave Blank if none is wished";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Count of Questions";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leave Blank if you want to get all available questions.";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimum Score Of Questions";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_DESCRIPTION_PARAGRAPH] = "Leave Blank if you don't care how much score a question has";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_DESCRIPTION_PARAGRAPH] = "Leave Blank if no timer while answering is wished";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_PARAGRAPH_FURTHER_GAME_START_EXPLANATION] =
                     "With no invite code a new game will be started. Otherwise the game with the code will be joined.";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "START";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN] = "JOIN";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE] = "CREATE";
 
-                $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Reset This Page To Default";
+                $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Reset This Page";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "You can reset this page to default. Do you want to?";
                 $output[self::ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "DO IT! RESET EVERYTHING!";
 
@@ -206,6 +218,7 @@ class LocalizationStore
 
     public const ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT = "ViewFrameHelper_Html_Head_Title_Text";
     public const ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT = "ViewFrameHelper_Html_Body_Title_Text";
+    public const ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT = "ViewFrameHelper_Html_Body_Subtitle_Text";
 
     public const ID_INDEXVIEW_BODY_MAIN_GAME_DESCRIPTION = "IndexView_Body_Main_Game_Description";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_PLACEHOLDER = "IndexView_Body_Main_Form_Username_New_Game_Placeholder";
@@ -213,10 +226,15 @@ class LocalizationStore
     public const ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_VALUE = "IndexView_Body_Main_Form_Just_Watch_New_Game_Value";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_PLACEHOLDER = "IndexView_Body_Main_Form_Invite_Code_Placeholder";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER = "IndexView_Body_Main_Form_Max_Questions_Placeholder";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH = "IndexView_Body_Main_Form_Max_Questions_Description_Paragraph";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER = "IndexView_Body_Main_Form_Minimum_Score_Placeholder";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_DESCRIPTION_PARAGRAPH = "IndexView_Body_Main_Form_Minimum_Score_Paragraph";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER = "IndexView_Body_Main_Form_Timer_Wanted_Placeholder";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_DESCRIPTION_PARAGRAPH = "IndexView_Body_Main_Form_Timer_Wanted_Paragraph";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_PARAGRAPH_FURTHER_GAME_START_EXPLANATION = "IndexView_Body_Main_Form_Paragraph_Further_Game_Start_Explanation";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE = "IndexView_Body_Main_Form_Submit_Value";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN = "IndexView_Body_Main_Form_Submit_Value_Join";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE = "IndexView_Body_Main_Form_Submit_Value_Create";
 
     public const ID_RESETVIEW_BODY_MAIN_HEADLINE = "ResetView_Body_Main_Headline";
     public const ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION = "ResetView_Body_Main_Paragraph_Explanation";

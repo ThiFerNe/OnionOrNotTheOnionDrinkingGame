@@ -78,26 +78,27 @@ class FrontEndRequestAcrossMessagesLogic
         $_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY] = array();
     }
 
-    public static function insertHTML()
+    public static function insertHTML(string $generalCssClasses, string $successCssClasses, string $errorCssClasses, string $warnCssClasses, string $infoCssClasses)
     {
         if (!self::isEmpty()) {
             $messages = self::popMessages();
             foreach ($messages as $message) {
                 ?>
                 <section class="<?php
+                echo $generalCssClasses . " ";
                 switch ($message[self::ARRAY_KEY_TYPE]) {
                     case self::TYPE_SUCCESS:
-                        echo "msg-box-success";
+                        echo $successCssClasses;
                         break;
                     case self::TYPE_ERROR:
-                        echo "msg-box-error";
+                        echo $errorCssClasses;
                         break;
                     case self::TYPE_WARN:
-                        echo "msg-box-warn";
+                        echo $warnCssClasses;
                         break;
                     case self::TYPE_INFO:
                     default:
-                        echo "msg-box-info";
+                        echo $infoCssClasses;
                         break;
                 }
                 ?>"><?php echo self::getMessage($message[self::ARRAY_KEY_MESSAGE]); ?></section>
