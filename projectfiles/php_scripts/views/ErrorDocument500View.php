@@ -19,7 +19,7 @@ class ErrorDocument500View extends AbstractView
      */
     public function getCssIncludeFiles()
     {
-        return array("errordocument.css");
+        return array("style.css", "errordocument.css");
     }
 
     /**

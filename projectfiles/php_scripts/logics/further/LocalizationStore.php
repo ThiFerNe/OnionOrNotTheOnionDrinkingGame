@@ -40,7 +40,7 @@ class LocalizationStore
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_VALUE] = $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL];
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_PLACEHOLDER] = "Einladungscode";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Anzahl an Fragen";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn alle Fragen gewollt sind";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn bis zu 2000 am Stück Fragen gewollt sind";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimaler Score der Fragen";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_DESCRIPTION_PARAGRAPH] = "Leer Lassen, wenn es egal ist, wie gut eine Frage sein muss";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer";
@@ -50,6 +50,11 @@ class LocalizationStore
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "STARTEN";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN] = "BEITRETEN";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE] = "ERSTELLEN";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_LABEL] = "Spielername";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_LABEL] = "Einladungscode";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_LABEL] = "Anzahl an Fragen";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_LABEL] = "Minimaler Score der Fragen";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_LABEL] = "Timer";
 
                 $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Diese Seite zurücksetzen";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "Du kannst diese Seite zurücksetzen. Willst du das?";
@@ -154,7 +159,7 @@ class LocalizationStore
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_VALUE] = $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_JUST_WATCH_NEW_GAME_LABEL];
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_PLACEHOLDER] = "Invite Code";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER] = "Count of Questions";
-                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leave Blank if you want to get all available questions.";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_DESCRIPTION_PARAGRAPH] = "Leave Blank if you want to get almost 2000 available questions";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_PLACEHOLDER] = "Minimum Score Of Questions";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_DESCRIPTION_PARAGRAPH] = "Leave Blank if you don't care how much score a question has";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER] = "Timer";
@@ -164,6 +169,11 @@ class LocalizationStore
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "START";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN] = "JOIN";
                 $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE] = "CREATE";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_LABEL] = "Playername";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_LABEL] = "Invite Code";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_LABEL] = "Count of Questions";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_LABEL] = "Minimum Score of Questions";
+                $output[self::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_LABEL] = "Timer";
 
                 $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Reset This Page";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "You can reset this page to default. Do you want to?";
@@ -275,6 +285,11 @@ class LocalizationStore
     public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE = "IndexView_Body_Main_Form_Submit_Value";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_JOIN = "IndexView_Body_Main_Form_Submit_Value_Join";
     public const ID_INDEXVIEW_BODY_MAIN_FORM_SUBMIT_VALUE_CREATE = "IndexView_Body_Main_Form_Submit_Value_Create";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_USERNAME_NEW_GAME_LABEL = "IndexView_Body_Main_Form_Username_New_Game_Label";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_INVITE_CODE_LABEL = "IndexView_Body_Main_Form_Invite_Code_Label";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_LABEL = "IndexView_Body_Main_Form_Max_Questions_Label";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_MINIMUM_SCORE_LABEL = "IndexView_Body_Main_Form_Minimum_Score_Label";
+    public const ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_LABEL = "IndexView_Body_Main_Form_Timer_Wanted_Label";
 
     public const ID_RESETVIEW_BODY_MAIN_HEADLINE = "ResetView_Body_Main_Headline";
     public const ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION = "ResetView_Body_Main_Paragraph_Explanation";
