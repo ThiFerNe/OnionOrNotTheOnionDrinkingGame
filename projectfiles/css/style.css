@@ -31,8 +31,9 @@
 
 .msg-box-success, .msg-box-error, .msg-box-warn, .msg-box-info {
     padding: 5px;
-    border: 1px solid #000000;
+    border: 2px solid #000000;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .msg-box-success {
@@ -43,7 +44,7 @@
 
 .msg-box-error {
     color: rgb(159, 41, 19);
-    background-color: rgb(241, 111, 94);
+    background-color: rgb(255, 113, 96);
     border-color: rgb(121, 26, 12);
 }
 

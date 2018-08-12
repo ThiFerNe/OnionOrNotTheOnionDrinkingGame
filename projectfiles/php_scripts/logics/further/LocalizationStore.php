@@ -54,6 +54,20 @@ class LocalizationStore
                 $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Diese Seite zurücksetzen";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "Du kannst diese Seite zurücksetzen. Willst du das?";
                 $output[self::ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "TUE ES! SETZE ALLES ZURÜCK!";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_LABEL] = "Datenbankserver Hostname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_PLACEHOLDER] = "Datenbankserver Hostname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_LABEL] = "Datenbankserver Port";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_PLACEHOLDER] = "Datenbankserver Port";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_LABEL] = "Datenbankname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_PLACEHOLDER] = "Datenbankname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_LABEL] = "Datenbankserver Benutzername";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_PLACEHOLDER] = "Datenbankserver Benutzername";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_LABEL] = "Datenbankserver Passwort";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_PLACEHOLDER] = "Datenbankserver Passwort";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_LABEL] = "Datenbankserver Benutzername (Lesemodus)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_PLACEHOLDER] = "Datenbankserver Benutzername (Lesemodus)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_LABEL] = "Datenbankserver Passwort (Lesemodus)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_PLACEHOLDER] = "Datenbankserver Passwort (Lesemodus)";
 
                 $output[self::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_WATCHER] = "Zuschauer";
                 $output[self::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_PLAYER] = "Spieler";
@@ -116,6 +130,12 @@ class LocalizationStore
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID] = "Ein interner Serverfehler trat auf.";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID] = "Die Anzahl der Fragen war ungültig! Bitte nutze eine Nummer.";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID] = "Die minimale Bewertung war ungültig! Bitte nutze eine Nummer.";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST] = "Der Datenbank Hostname fehlt!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT] = "Der Datenbank Port ist ungültig!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT] = "Der Datenbank Port fehlt!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME] = "Der Datenbank Name fehlt!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME] = "Der Datenbank Benutzer fehlt!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME] = "Der Datenbank schreibgeschützte Benutzer fehlt!";
 
                 break;
             case self::LOCALE_ENGLISH:
@@ -148,6 +168,20 @@ class LocalizationStore
                 $output[self::ID_RESETVIEW_BODY_MAIN_HEADLINE] = "Reset This Page";
                 $output[self::ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION] = "You can reset this page to default. Do you want to?";
                 $output[self::ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE] = "DO IT! RESET EVERYTHING!";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_LABEL] = "Database Server Hostname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_PLACEHOLDER] = "Database Server Hostname";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_LABEL] = "Database Server Port";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_PLACEHOLDER] = "Database Server Port";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_LABEL] = "Database Name";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_PLACEHOLDER] = "Database Name";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_LABEL] = "Database Server Username";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_PLACEHOLDER] = "Database Server Username";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_LABEL] = "Database Server Password";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_PLACEHOLDER] = "Database Server Password";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_LABEL] = "Database Server Username (Read Only)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_PLACEHOLDER] = "Database Server Username (Read Only)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_LABEL] = "Database Server Password (Read Only)";
+                $output[self::ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_PLACEHOLDER] = "Database Server Password (Read Only)";
 
                 $output[self::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_WATCHER] = "Watcher";
                 $output[self::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_PLAYER] = "Player";
@@ -210,6 +244,12 @@ class LocalizationStore
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID] = "An internal server error happened.";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID] = "The number of questions has been invalid! Please use a number!";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID] = "The minimum score has been invalid! Please use a number!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST] = "The Database Host is missing!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT] = "The Database Port is invalid!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT] = "The Database Port is missing!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME] = "The Database Name is missing!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME] = "The Database Username is missing!";
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME] = "The Database Read Only Username is missing!";
         }
         return $output;
     }
@@ -239,6 +279,20 @@ class LocalizationStore
     public const ID_RESETVIEW_BODY_MAIN_HEADLINE = "ResetView_Body_Main_Headline";
     public const ID_RESETVIEW_BODY_MAIN_PARAGRAPH_EXPLANATION = "ResetView_Body_Main_Paragraph_Explanation";
     public const ID_RESETVIEW_BODY_MAIN_FORM_SUBMIT_VALUE = "ResetView_Body_Main_Form_Submit_Value";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_LABEL = "ResetView_Body_Main_Form_DBHost_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBHOST_PLACEHOLDER = "ResetView_Body_Main_Form_DBHost_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_LABEL = "ResetView_Body_Main_Form_DBPort_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBPORT_PLACEHOLDER = "ResetView_Body_Main_Form_DBPort_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_LABEL = "ResetView_Body_Main_Form_DBName_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBNAME_PLACEHOLDER = "ResetView_Body_Main_Form_DBName_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_LABEL = "ResetView_Body_Main_Form_DBUsername_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBUSERNAME_PLACEHOLDER = "ResetView_Body_Main_Form_DBUsername_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_LABEL = "ResetView_Body_Main_Form_DBPassword_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBPASSWORD_PLACEHOLDER = "ResetView_Body_Main_Form_DBPassword_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_LABEL = "ResetView_Body_Main_Form_DBReadOnlyUsername_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYUSERNAME_PLACEHOLDER = "ResetView_Body_Main_Form_DBReadOnlyUsername_Placeholder";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_LABEL = "ResetView_Body_Main_Form_DBReadOnlyPassword_Label";
+    public const ID_RESETVIEW_BODY_MAIN_FORM_DBREADONLYPASSWORD_PLACEHOLDER = "ResetView_Body_Main_Form_DBReadOnlyPassword_Placeholder";
 
     public const ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_WATCHER = "GameView_Body_Main_Type_Of_Player_Watcher";
     public const ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_PLAYER = "GameView_Body_Main_Type_Of_Player_Player";
@@ -299,4 +353,11 @@ class LocalizationStore
     public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID = "FrontendRequestAcrossMessagesLogic_Message_GameController_Error_Missing_Question_Id";
     public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID = "FrontendRequestAcrossMessagesLogic_Message_IndexController_Error_Questions_Invalid";
     public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID = "FrontendRequestAcrossMessagesLogic_Message_IndexController_Error_Minimum_Score_Invalid";
+
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Missing_DBHost";
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Invalid_DBPort";
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Missing_DBPort";
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Missing_DBName";
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Missing_DBUsername";
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Input_Missing_DBReadOnlyUsername";
 }

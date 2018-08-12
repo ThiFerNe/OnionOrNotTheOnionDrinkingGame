@@ -11,6 +11,7 @@ class FrontEndRequestAcrossMessagesLogic
 
     public const ARRAY_KEY_TYPE = "Array_Key_Type";
     public const ARRAY_KEY_MESSAGE = "Array_Message";
+    public const ARRAY_KEY_MESSAGE_ADDENDUM = "Array_Message_Addendum";
     public const ARRAY_KEY_SOURCE_PREFIX = "Array_Source_Prefix";
 
     public const TYPE_INFO = "Type_Info";
@@ -35,8 +36,14 @@ class FrontEndRequestAcrossMessagesLogic
     public const MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID = "Message_GameController_Error_Missing_Question_Id";
     public const MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID = "Message_IndexController_Error_Questions_Invalid";
     public const MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID = "Message_IndexController_Error_Minimum_Score_Invalid";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST = "Message_ResetController_Reset_Error_Input_Missing_DBHost";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT = "Message_ResetController_Reset_Error_Input_Invalid_DBPort";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT = "Message_ResetController_Reset_Error_Input_Missing_DBPort";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME = "Message_ResetController_Reset_Error_Input_Missing_DBName";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME = "Message_ResetController_Reset_Error_Input_Missing_DBUsername";
+    public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME = "Message_ResetController_Reset_Error_Input_Missing_DBReadOnlyUsername";
 
-    public static function appendMessage(string $type, string $message, string $sourcePrefix)
+    public static function appendMessage(string $type, string $message, string $sourcePrefix, string $messageAddendum = NULL)
     {
         if (!isset($_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY])) {
             $_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY] = array();
@@ -44,6 +51,7 @@ class FrontEndRequestAcrossMessagesLogic
         array_push($_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY], array(
             self::ARRAY_KEY_TYPE => $type,
             self::ARRAY_KEY_MESSAGE => $message,
+            self::ARRAY_KEY_MESSAGE_ADDENDUM => $messageAddendum,
             self::ARRAY_KEY_SOURCE_PREFIX => $sourcePrefix
         ));
     }
@@ -101,7 +109,10 @@ class FrontEndRequestAcrossMessagesLogic
                         echo $infoCssClasses;
                         break;
                 }
-                ?>"><?php echo self::getMessage($message[self::ARRAY_KEY_MESSAGE]); ?></section>
+                ?>"><?php echo self::getMessage($message[self::ARRAY_KEY_MESSAGE]);
+                    if ($message[self::ARRAY_KEY_MESSAGE_ADDENDUM] !== NULL) { ?>
+                        <br/><?php echo $message[self::ARRAY_KEY_MESSAGE_ADDENDUM];
+                    } ?></section>
                 <?php
             }
         }
@@ -161,6 +172,26 @@ class FrontEndRequestAcrossMessagesLogic
             case self::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID:
                 return \logics\LocalizationLogic::get(
                     \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME);
+            case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME);
+
+
             default:
                 return "#error#";
         }
