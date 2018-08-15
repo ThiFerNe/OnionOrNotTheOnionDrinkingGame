@@ -136,8 +136,10 @@ class UpdateLogic
                         break;
                     case LobbyLogic::STATE_AFTERMATH:
                         // Wait a specific time and then switch either to next question or END
-                        if (($current_state_on + self::AFTERMATH_TIME) > time()) {
-                            break;
+                        if(!self::everyoneInTheLobbyWantsToSkipAftermath($current_id)) {
+                            if (($current_state_on + self::AFTERMATH_TIME) > time()) {
+                                break;
+                            }
                         }
                     // NO BREAK; HERE! IT HAS TO FALL THROUGH TO THE DEFAULT!
                     default:
@@ -150,6 +152,16 @@ class UpdateLogic
             }
         }
         return TRUE;
+    }
+
+    public static function everyoneInTheLobbyWantsToSkipAftermath(int $lobbyid) {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `id` FROM `session` WHERE `in_lobby` = ? AND `wants_to_skip_aftermath` = 0;"
+        );
+        if($preparedStatement->execute(array($lobbyid))) {
+            return $preparedStatement->rowCount() == 0;
+        }
+        return FALSE;
     }
 
     public static function switchToAftermath(int $lobbyid)
@@ -233,6 +245,7 @@ class UpdateLogic
         if ($userids !== NULL) {
             foreach ($userids as $userid) {
                 SessionLogic::setActualAnswerIsOnionByUserSessionId($userid, 0);
+                SessionLogic::setWantsToSkipAftermathByUserSessionId($userid, FALSE);
             }
         }
         // Here no time will be waited but the next question or END will be switched to

@@ -180,6 +180,10 @@ class GameController extends AbstractController
                 }
                 return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
             }
+            if(array_key_exists("skip", $_GET) && !empty($_GET["skip"])) {
+                \logics\SessionLogic::setWantsToSkipAftermathByPhpSessionId(session_id(), TRUE);
+                return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
+            }
         }
 
         if (\logics\LobbyLogic::getCurrentStateByLobbyId(\logics\SessionLogic::getInLobbyByPhpSessionId(session_id())) == \logics\LobbyLogic::STATE_END &&

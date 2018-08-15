@@ -188,8 +188,9 @@ class ResetLogic
               `last_active` int(11) NOT NULL,
               `in_lobby` int(11) NOT NULL,
               `points` int(11) NOT NULL DEFAULT '0',
-              `only_watcher` tinyint(1) NOT NULL DEFAULT 0,
-              `actual_answer_is_onion` int(11) NOT NULL DEFAULT 0
+              `wants_to_skip_aftermath` int(11) NOT NULL DEFAULT '0',
+              `only_watcher` tinyint(1) NOT NULL DEFAULT '0',
+              `actual_answer_is_onion` int(11) NOT NULL DEFAULT '0'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
             "ALTER TABLE `session`
               ADD PRIMARY KEY (`id`);",

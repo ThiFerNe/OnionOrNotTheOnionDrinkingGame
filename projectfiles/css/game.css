@@ -388,7 +388,7 @@ body > main {
     margin-top: 2px;
 
     display: grid;
-    grid-template-columns: auto min-content min-content min-content;
+    grid-template-columns: auto min-content min-content min-content min-content;
     grid-column-gap: 5px;
 }
 
@@ -400,8 +400,16 @@ body > main {
     font-weight: bold;
 }
 
-.span_user_has_answered {
+.span_user_wants_to_skip {
     grid-column: 2 / span 1;
+}
+
+.span_user_wants_to_skip > img {
+    height: 1em;
+}
+
+.span_user_has_answered {
+    grid-column: 3 / span 1;
 }
 
 .span_user_has_answered > img {
@@ -409,7 +417,7 @@ body > main {
 }
 
 .span_users_answer {
-    grid-column: 3 / span 1;
+    grid-column: 4 / span 1;
 }
 
 .span_users_answer > img {
@@ -425,7 +433,7 @@ body > main {
 }
 
 .span_points_or_watching {
-    grid-column: 4 / span 1;
+    grid-column: 5 / span 1;
 
     white-space: nowrap;
 }

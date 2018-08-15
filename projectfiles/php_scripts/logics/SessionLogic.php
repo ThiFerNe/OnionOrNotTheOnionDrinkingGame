@@ -208,6 +208,33 @@ class SessionLogic
         return $preparedStatement->execute(array($points, $usersessionid));
     }
 
+    public static function setWantsToSkipAftermathByPhpSessionId(string $phpsessionid, bool $wantsToSkipAftermath)
+    {
+        return self::setWantsToSkipAftermathByUserSessionId(self::getUserSessionIdByPhpSessionId($phpsessionid), $wantsToSkipAftermath);
+    }
+
+    public static function setWantsToSkipAftermathByUserSessionId(int $usersessionid, bool $wantsToSkipAftermath)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
+            "UPDATE `session` SET `wants_to_skip_aftermath` = ? WHERE `id` = ?;"
+        );
+        return $preparedStatement->execute(array($wantsToSkipAftermath === TRUE ? 1 : 0, $usersessionid));
+    }
+
+    public static function isWantsToSkipAftermathByUserSessionId(int $usersessionid)
+    {
+        $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+            "SELECT `wants_to_skip_aftermath` FROM `session` WHERE `id` = ?;"
+        );
+        if ($preparedStatement->execute(array($usersessionid))) {
+            if ($preparedStatement->rowCount() > 0) {
+                $fetched_row = $preparedStatement->fetch(\PDO::FETCH_ASSOC);
+                return $fetched_row["wants_to_skip_aftermath"] == 1;
+            }
+        }
+        return NULL;
+    }
+
     public static function isOnlyWatcherByUserSessionId(int $usersessionid)
     {
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
@@ -305,8 +332,8 @@ class SessionLogic
 
     public static function handleDownvoteByUserSessionId(int $usersessionid, int $gid)
     {
-        if(SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
-            if(SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
+        if (SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
+            if (SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
                 GameDataLogic::decreaseUpvotesByGameDataId($gid);
                 GameDataLogic::increaseDownvotesByGameDataId($gid);
                 SessionHasVotedForGameDataLogic::update($gid, $usersessionid, 0);
@@ -324,8 +351,8 @@ class SessionLogic
 
     public static function handleUpvoteByUserSessionId(int $usersessionid, int $gid)
     {
-        if(SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
-            if(!SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
+        if (SessionHasVotedForGameDataLogic::contains($gid, $usersessionid)) {
+            if (!SessionHasVotedForGameDataLogic::isUpvote($gid, $usersessionid)) {
                 GameDataLogic::decreaseDownvotesByGameDataId($gid);
                 GameDataLogic::increaseUpvotesByGameDataId($gid);
                 SessionHasVotedForGameDataLogic::update($gid, $usersessionid, 1);

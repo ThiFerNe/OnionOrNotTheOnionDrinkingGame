@@ -17,7 +17,8 @@ use \helper\LogHelper as LOG;
 
 class GameViewContentLogic
 {
-    public static function betterPrintContent() {
+    public static function betterPrintContent()
+    {
         (new \controllers\GameController())->action("");
         self::printContent();
     }
@@ -83,6 +84,16 @@ class GameViewContentLogic
                         $val2 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SECTION_TIME_REMAINING_PART_2);
                         if (strlen($val2) > 0) {
                             echo " " . $val2;
+                        }
+                        ?><?php
+                        if (!$is_watcher) {
+                            if (\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId(
+                                    \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id()))
+                            ) {
+                                ?> - Skipping...<?php
+                            } else {
+                                ?> - <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>game?skip=true">Skip</a><?php
+                            }
                         }
                         ?>
                     </section> <?php
@@ -289,11 +300,11 @@ class GameViewContentLogic
                         $points = $sorted_playing_user_ranking[$i]["points"];
                         ?>
                         <li class="<?php
-                        if($rank == "1") {
+                        if ($rank == "1") {
                             echo "list_or_paragraph_ranking_place_one";
-                        } else if($rank == "2") {
+                        } else if ($rank == "2") {
                             echo "list_or_paragraph_ranking_place_two";
-                        } else if($rank == "3") {
+                        } else if ($rank == "3") {
                             echo "list_or_paragraph_ranking_place_three";
                         } else {
                             echo "list_or_paragraph_ranking_place_others";
@@ -333,9 +344,14 @@ class GameViewContentLogic
                     ?>"><?php
                         echo $user[\controllers\GameController::USERS_LIST_USERNAME];
                         ?></span><?php
+                    if(\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId($user[\controllers\GameController::USERS_LIST_USERID])) {
+                        ?><span class="span_user_wants_to_skip"><img
+                                src="<?php \helper\VariousHelper::printUrlPrefix(); ?>images/fastforward.png"/>
+                        </span><?php
+                    }
                     if ($user[\controllers\GameController::USERS_LIST_HAS_ANSWERED]) {
                         ?><span class="span_user_has_answered"><img
-                                src="<?php \helper\VariousHelper::printUrlPrefix(); ?>images/pencil_icon.PNG"/>
+                                src="<?php \helper\VariousHelper::printUrlPrefix(); ?>images/pencil_icon.png"/>
                         </span><?php
                         if ($current_state == \logics\LobbyLogic::STATE_AFTERMATH) {
                             ?><span class="span_users_answer<?php
