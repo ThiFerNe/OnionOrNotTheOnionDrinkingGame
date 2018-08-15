@@ -1,0 +1,434 @@
+/******************************************************************************/
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > >  ROOT VARIABLE DEFINITION  < < < < < < < < < < < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+:root {
+    --celery: #96be50;
+    --white: #ffffff;
+    --boulder: #787878;
+    --siam: #5a6450;
+    --chelsea-cucumber: #78a04b;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESET LAYOUT CSS   < < < < < < < < < < < < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+body > main {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: min-content min-content;
+
+    grid-row-gap: 10px;
+
+    padding: 0;
+    padding-bottom: 10px;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >       JOIN PANEL       <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+#join_panel {
+    background-color: #84ab4a;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >      MAIN WRAPPER      <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+#main_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content min-content;
+
+    grid-column-gap: 10px;
+    grid-row-gap: 5px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                            PLAYER NAME HEADLINE                            */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#player_name_headline {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                            PLAYER TYPE AND EXIT                            */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#player_type_and_exit {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+
+    text-align: center;
+    margin: 0;
+}
+
+#exit_game_link {
+    padding: 4px;
+}
+
+#player_type {
+    font-style: italic;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                       MAIN SECTION FRONTEND MESSAGES                       */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#main_section_frontend_messages {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 1;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >      STATE START       <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              WELCOME HEADLINE                              */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#welcome_headline {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
+
+    text-align: center;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                                 START FORM                                 */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#start_form {
+    grid-column: 1 / span 2;
+    grid-row: 5 / span 1;
+
+    width: 100%;
+}
+
+#start_form_submit_button {
+    width: 100%;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >     STATE QUESTION     <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              QUESTION HEADLINE                             */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_headline_at_question_state {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
+}
+
+.question_headline {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+
+    font-weight: 900;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                           QUESTION ANSWER BUTTONS                          */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_the_onion_form {
+    grid-column: 1 / span 1;
+    grid-row: 5 / span 1;
+}
+
+#question_the_onion_form_submit_button {
+    width: 100%;
+    background-color: #00b500;
+}
+
+#question_not_the_onion_form {
+    grid-column: 2 / span 1;
+    grid-row: 5 / span 1;
+}
+
+#question_not_the_onion_form_submit_button {
+    width: 100%;
+    background-color: #b50000;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >     STATE AFTERMATH    <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                                RESULT LINE                                 */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_result {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
+
+    text-align: center;
+
+    margin: 0;
+}
+
+.question_result_correct {
+    color: #006700;
+    font-weight: bold;
+}
+
+.question_result_wrong {
+    color: #670000;
+    font-weight: bold;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              QUESTION HEADLINE                             */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_headline_at_aftermath_state {
+    grid-column: 1 / span 2;
+    grid-row: 5 / span 1;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                               QUESTION SUBLINE                             */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_subline {
+    grid-column: 1 / span 2;
+    grid-row: 6 / span 1;
+
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: min-content 1fr 1fr;
+}
+
+#question_subline_link_to_post {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+
+    margin-top: auto;
+    margin-bottom: auto;
+
+    white-space: nowrap;
+}
+
+#question_section_downvote_form {
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+
+    width: 100%;
+}
+
+#question_section_upvote_form {
+    grid-column: 3 / span 1;
+    grid-row: 1 / span 1;
+
+    width: 100%;
+}
+
+#question_section_downvote_submit_button {
+    background-color: #b50000;
+    width: 100%;
+}
+
+#question_section_upvote_submit_button {
+    background-color: #00b500;
+    width: 100%;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              QUESTION PICTURE                              */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_picture {
+    grid-column: 1 / span 2;
+    grid-row: 7 / span 1;
+
+    width: 100%;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >       STATE END        <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                                END HEADLINE                                */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_headline_at_end_state {
+    grid-column: 1 / span 2;
+    grid-row: 4 / span 1;
+}
+
+#play_again_form {
+    grid-column: 1 / span 2;
+    grid-row: 5 / span 1;
+}
+
+#play_again_submit_button {
+    width: 100%;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              RANKING HEADLINE                              */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#ranking_headline_at_end_state {
+    grid-column: 1 / span 2;
+    grid-row: 6 / span 1;
+}
+
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+/*                              RANKING HEADLINE                              */
+/* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#list_or_paragraph_ranking {
+    grid-column: 1 / span 2;
+    grid-row: 7 / span 1;
+}
+
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+/* >   >   >   >   >   >   >       PLAYERLIST       <   <   <   <   <   <   < */
+/* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
+
+#playerlist_headline {
+    grid-column: 1 / span 2;
+    grid-row: 8 / span 1;
+
+    margin-bottom: 0;
+}
+
+#playerlist_listing_or_paragraph {
+    grid-column: 1 / span 2;
+    grid-row: 9 / span 1;
+
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+#playerlist_listing_or_paragraph > li {
+    background-color: #bde552;
+
+    border-radius: 5px;
+    padding: 5px;
+
+    list-style: none;
+
+    margin-bottom: 2px;
+    margin-top: 2px;
+
+    display: grid;
+    grid-template-columns: auto min-content min-content min-content;
+    grid-column-gap: 5px;
+}
+
+.span_username {
+    grid-column: 1 / span 1;
+}
+
+.span_actual_user_is_username {
+    font-weight: bold;
+}
+
+.span_user_has_answered {
+    grid-column: 2 / span 1;
+}
+
+.span_user_has_answered > img {
+    height: 1em;
+}
+
+.span_users_answer {
+    grid-column: 3 / span 1;
+}
+
+.span_users_answer > img {
+    height: 1em;
+}
+
+.span_users_answer_is_correct {
+
+}
+
+.span_users_answer_is_wrong {
+
+}
+
+.span_points_or_watching {
+    grid-column: 4 / span 1;
+
+    white-space: nowrap;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESPONSIVE CSS     < < < < < < < < < < < < < */
+/* > > > > > > >  Extra small devices (phones, 600px and down)  < < < < < < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+@media only screen and (max-width: 600px) {
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESPONSIVE CSS     < < < < < < < < < < < < < */
+/* > > > Small devices (portrait tablets and large phones, 600px and up)  < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+@media only screen and (min-width: 600px) {
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESPONSIVE CSS     < < < < < < < < < < < < < */
+/* > > > > > > Medium devices (landscape tablets, 768px and up) < < < < < < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+@media only screen and (min-width: 768px) {
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESPONSIVE CSS     < < < < < < < < < < < < < */
+/* > > > > > > > Large devices (laptops/desktops, 992px and up) < < < < < < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+@media only screen and (min-width: 992px) {
+    body > main {
+        padding-right: 15%;
+        padding-left: 15%;
+    }
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* > > > > > > > > > > > > >     RESPONSIVE CSS     < < < < < < < < < < < < < */
+/* > >  Extra large devices (large laptops and desktops, 1200px and up)   < < */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+@media only screen and (min-width: 1200px) {
+    body > main {
+        padding-right: 20%;
+        padding-left: 20%;
+    }
+}
+
+/******************************************************************************/

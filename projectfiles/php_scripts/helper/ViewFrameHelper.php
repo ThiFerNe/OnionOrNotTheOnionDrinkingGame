@@ -28,6 +28,8 @@ public static function printPreHeader(bool $isRestrictedView = FALSE)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700,900,400italic,700italic,900italic|Droid+Serif:400,700,400italic,700italic'
+          rel='stylesheet' type='text/css'>
     <link rel="icon" href="<?php VariousHlp::printUrlPrefix(); ?>favicon.png">
     <?php
     }
