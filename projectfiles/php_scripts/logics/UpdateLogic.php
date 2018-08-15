@@ -14,7 +14,7 @@ use \helper\LogHelper as LOG;
 
 class UpdateLogic
 {
-    public const AFTERMATH_TIME = 15;
+    public const AFTERMATH_TIME = 30;
 
     public static function updateAll()
     {

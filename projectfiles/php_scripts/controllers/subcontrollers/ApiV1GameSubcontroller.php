@@ -2,22 +2,21 @@
 
 namespace subcontrollers;
 
-require_once ("AbstractSubcontroller.php");
+require_once("AbstractSubcontroller.php");
 require_once(__DIR__ . "/../../actions/NoneAction.php");
+require_once(__DIR__ . "/../../helper/LogHelper.php");
+require_once(__DIR__ . "/../../logics/GameViewContentLogic.php");
 
-/**
- *
- *
- * @package controllers
-*/
-class ApiV1Subcontroller extends AbstractSubcontroller
+use \helper\LogHelper as LOG;
+
+class ApiV1GameSubcontroller extends AbstractSubcontroller
 {
     /**
      * The prefix. Only used by an implementation of this Controller.
      * It can be used to prefix entries within the $_REQUEST global variable
      * to better distinguish its entries when used in the view classes.
      */
-    public const PREFIX = "ApiV1Subcontroller_";
+    public const PREFIX = "ApiV1GameSubcontroller_";
 
     /**
      * Override of parent function. More to read at that.
@@ -36,7 +35,8 @@ class ApiV1Subcontroller extends AbstractSubcontroller
      * @see \subcontrollers\AbstractSubcontroller::action()
      * @return \actions\AbstractAction (More to read at parent function)
      */
-    public function action(string $requestSubUri) {
+    public function action(string $requestSubUri)
+    {
 
         // Only check this if the suburi is filled
         if (!empty($requestSubUri)) {
@@ -51,21 +51,12 @@ class ApiV1Subcontroller extends AbstractSubcontroller
             // Get the first part of the requested suburi
             $requestSubcontroller = "/" . explode("/", $requestSubUriEdited)[0];
 
-            // Get the remaining part of the requested suburi
-            $requestSubSubUri = "/" . implode("/", array_slice(explode("/", $requestSubUriEdited), 1));
-
-            // Prepare switching for every requested first part of the suburi
-            $subcontrollerToCall = NULL;
-
             // if elses for the requested suburis
-            if ($requestSubcontroller === "/game") {
-                require_once(__DIR__ . "/ApiV1GameSubcontroller.php");
-                $subcontrollerToCall = new \subcontrollers\ApiV1GameSubcontroller();
-            }
-
-            // If the subcontroller had been found
-            if($subcontrollerToCall !== NULL) {
-                return $subcontrollerToCall->action($requestSubSubUri);
+            if ($requestSubcontroller === "/mainwrapper") {
+                if($_SERVER['REQUEST_METHOD'] === "GET") {
+                    \logics\GameViewContentLogic::betterPrintContent();
+                    return new \actions\NoneAction();
+                }
             }
         }
 
@@ -73,4 +64,5 @@ class ApiV1Subcontroller extends AbstractSubcontroller
         http_response_code(400);
         return new \actions\NoneAction();
     }
+
 }

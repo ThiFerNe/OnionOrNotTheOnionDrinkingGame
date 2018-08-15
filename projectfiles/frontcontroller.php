@@ -63,6 +63,7 @@ $controller["/index"] = "IndexController";
 $controller["/game"] = "GameController";
 $controller["/reset"] = "ResetController";
 $controller["/exit"] = "ExitController";
+$controller["/api"] = "ApiController";
 
 /*
  * To route the incoming request, we have to get the top level request uri.

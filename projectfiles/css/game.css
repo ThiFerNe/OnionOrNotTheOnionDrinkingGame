@@ -87,13 +87,31 @@ body > main {
     font-style: italic;
 }
 
+#remaining_time_question_state {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 1;
+
+    text-align: center;
+    font-style: italic;
+}
+
+#remaining_time_aftermath_state {
+    grid-column: 1 / span 2;
+    grid-row: 3 / span 1;
+
+    text-align: center;
+    font-style: italic;
+    margin-top: 10px;
+}
+
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 /*                       MAIN SECTION FRONTEND MESSAGES                       */
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #main_section_frontend_messages {
     grid-column: 1 / span 2;
-    grid-row: 3 / span 1;
+    grid-row: 4 / span 1;
+    margin-top: 10px;
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
@@ -106,7 +124,7 @@ body > main {
 
 #welcome_headline {
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
 
     text-align: center;
 }
@@ -117,7 +135,7 @@ body > main {
 
 #start_form {
     grid-column: 1 / span 2;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
 
     width: 100%;
 }
@@ -136,7 +154,7 @@ body > main {
 
 #question_headline_at_question_state {
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
 }
 
 .question_headline {
@@ -157,7 +175,7 @@ body > main {
 
 #question_the_onion_form {
     grid-column: 1 / span 1;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
 }
 
 #question_the_onion_form_submit_button {
@@ -167,7 +185,7 @@ body > main {
 
 #question_not_the_onion_form {
     grid-column: 2 / span 1;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
 }
 
 #question_not_the_onion_form_submit_button {
@@ -185,7 +203,7 @@ body > main {
 
 #question_result {
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
 
     text-align: center;
 
@@ -208,7 +226,7 @@ body > main {
 
 #question_headline_at_aftermath_state {
     grid-column: 1 / span 2;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
 }
 
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
@@ -217,7 +235,7 @@ body > main {
 
 #question_subline {
     grid-column: 1 / span 2;
-    grid-row: 6 / span 1;
+    grid-row: 7 / span 1;
 
     display: grid;
     grid-column-gap: 10px;
@@ -264,7 +282,7 @@ body > main {
 
 #question_picture {
     grid-column: 1 / span 2;
-    grid-row: 7 / span 1;
+    grid-row: 8 / span 1;
 
     width: 100%;
 }
@@ -279,12 +297,12 @@ body > main {
 
 #question_headline_at_end_state {
     grid-column: 1 / span 2;
-    grid-row: 4 / span 1;
+    grid-row: 5 / span 1;
 }
 
 #play_again_form {
     grid-column: 1 / span 2;
-    grid-row: 5 / span 1;
+    grid-row: 6 / span 1;
 }
 
 #play_again_submit_button {
@@ -297,7 +315,7 @@ body > main {
 
 #ranking_headline_at_end_state {
     grid-column: 1 / span 2;
-    grid-row: 6 / span 1;
+    grid-row: 7 / span 1;
 }
 
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
@@ -306,7 +324,36 @@ body > main {
 
 #list_or_paragraph_ranking {
     grid-column: 1 / span 2;
-    grid-row: 7 / span 1;
+    grid-row: 8 / span 1;
+
+    padding-left: 0;
+}
+
+#list_or_paragraph_ranking > li {
+    list-style: none;
+
+    padding: 5px;
+
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    border-radius: 5px;
+}
+
+.list_or_paragraph_ranking_place_one {
+    background-color: #D4AF37;
+}
+
+.list_or_paragraph_ranking_place_two {
+    background-color: #c4c7ce;
+}
+
+.list_or_paragraph_ranking_place_three {
+    background-color: #a36e27;
+}
+
+.list_or_paragraph_ranking_place_others {
+    background-color: #ffffff;
 }
 
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
@@ -315,14 +362,14 @@ body > main {
 
 #playerlist_headline {
     grid-column: 1 / span 2;
-    grid-row: 8 / span 1;
+    grid-row: 9 / span 1;
 
     margin-bottom: 0;
 }
 
 #playerlist_listing_or_paragraph {
     grid-column: 1 / span 2;
-    grid-row: 9 / span 1;
+    grid-row: 10 / span 1;
 
     margin-top: 0;
     margin-bottom: 0;
