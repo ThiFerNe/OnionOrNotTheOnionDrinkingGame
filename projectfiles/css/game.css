@@ -44,10 +44,9 @@ body > main {
 
 #main_wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: min-content min-content;
+    grid-template-columns: 100%;
+    grid-template-rows: min-content min-content min-content min-content min-content min-content min-content min-content min-content min-content 1fr;
 
-    grid-column-gap: 10px;
     grid-row-gap: 5px;
 
     padding-left: 10px;
@@ -59,7 +58,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #player_name_headline {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 1 / span 1;
 
     margin: 0;
@@ -72,7 +71,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #player_type_and_exit {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 2 / span 1;
 
     text-align: center;
@@ -88,7 +87,7 @@ body > main {
 }
 
 #remaining_time_question_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 3 / span 1;
 
     text-align: center;
@@ -96,7 +95,7 @@ body > main {
 }
 
 #remaining_time_aftermath_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 3 / span 1;
 
     text-align: center;
@@ -109,7 +108,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #main_section_frontend_messages {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 4 / span 1;
     margin-top: 10px;
 }
@@ -123,7 +122,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #welcome_headline {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 5 / span 1;
 
     text-align: center;
@@ -134,7 +133,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #start_form {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 6 / span 1;
 
     width: 100%;
@@ -153,7 +152,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_headline_at_question_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 5 / span 1;
 }
 
@@ -172,6 +171,15 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 /*                           QUESTION ANSWER BUTTONS                          */
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
+
+#question_the_onion_not_the_onion_forms_section {
+    grid-column: 1 / span 1;
+    grid-row: 6 / span 1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+}
 
 #question_the_onion_form {
     grid-column: 1 / span 1;
@@ -206,7 +214,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_result {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 5 / span 1;
 
     text-align: center;
@@ -229,7 +237,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_headline_at_aftermath_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 6 / span 1;
 }
 
@@ -238,7 +246,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_subline {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 7 / span 1;
 
     display: grid;
@@ -285,7 +293,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_picture {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 8 / span 1;
 
     width: 100%;
@@ -300,12 +308,12 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #question_headline_at_end_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 5 / span 1;
 }
 
 #play_again_form {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 6 / span 1;
 }
 
@@ -318,7 +326,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #ranking_headline_at_end_state {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 7 / span 1;
 }
 
@@ -327,7 +335,7 @@ body > main {
 /* ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~   ~  */
 
 #list_or_paragraph_ranking {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 8 / span 1;
 
     padding-left: 0;
@@ -365,14 +373,14 @@ body > main {
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
 
 #playerlist_headline {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 9 / span 1;
 
     margin-bottom: 0;
 }
 
 #playerlist_listing_or_paragraph {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 1;
     grid-row: 10 / span 1;
 
     margin-top: 0;
@@ -472,9 +480,20 @@ body > main {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 @media only screen and (min-width: 992px) {
-    body > main {
-        padding-right: 15%;
-        padding-left: 15%;
+    #main_wrapper {
+        padding-right: 5%;
+        padding-left: 5%;
+
+        grid-template-columns: 1fr min-content;
+        grid-column-gap: 10px;
+    }
+    #playerlist_headline {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
+    }
+    #playerlist_listing_or_paragraph {
+        grid-column: 2 / span 1;
+        grid-row: 2 / -1;
     }
 }
 
@@ -484,9 +503,9 @@ body > main {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 @media only screen and (min-width: 1200px) {
-    body > main {
-        padding-right: 20%;
-        padding-left: 20%;
+    #main_wrapper {
+        padding-right: 10%;
+        padding-left: 10%;
     }
 }
 

@@ -155,33 +155,35 @@ class GameViewContentLogic
                 <?php
                 if (!$is_watcher) {
                     ?>
-                    <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
-                          id="question_the_onion_form">
-                        <input type="hidden" name="question_id" value="<?php
-                        echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
-                        ?>"/>
-                        <input type="submit" name="set_onion" class="<?php
-                        if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == 1) {
-                            echo "button_chosen_outline";
-                        }
-                        ?>" id="question_the_onion_form_submit_button"
-                               value="<?php
-                               echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_ONION_SUBMIT_VALUE);
-                               ?>"/>
-                    </form>
-                    <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
-                          id="question_not_the_onion_form">
-                        <input type="hidden" name="question_id" value="<?php
-                        echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
-                        ?>"/>
-                        <input type="submit" name="set_not_the_onion" class="<?php
-                        if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == -1) {
-                            echo "button_chosen_outline";
-                        }
-                        ?>" id="question_not_the_onion_form_submit_button" value="<?php
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_NOT_ONION_SUBMIT_VALUE);
-                        ?>"/>
-                    </form>
+                    <section id="question_the_onion_not_the_onion_forms_section">
+                        <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
+                              id="question_the_onion_form">
+                            <input type="hidden" name="question_id" value="<?php
+                            echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
+                            ?>"/>
+                            <input type="submit" name="set_onion" class="<?php
+                            if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == 1) {
+                                echo "button_chosen_outline";
+                            }
+                            ?>" id="question_the_onion_form_submit_button"
+                                   value="<?php
+                                   echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_ONION_SUBMIT_VALUE);
+                                   ?>"/>
+                        </form>
+                        <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
+                              id="question_not_the_onion_form">
+                            <input type="hidden" name="question_id" value="<?php
+                            echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
+                            ?>"/>
+                            <input type="submit" name="set_not_the_onion" class="<?php
+                            if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == -1) {
+                                echo "button_chosen_outline";
+                            }
+                            ?>" id="question_not_the_onion_form_submit_button" value="<?php
+                            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_NOT_ONION_SUBMIT_VALUE);
+                            ?>"/>
+                        </form>
+                    </section>
                 <?php }
                 break;
             case \logics\LobbyLogic::STATE_AFTERMATH:

@@ -74,6 +74,7 @@ class GameView extends AbstractView
                     )
                 ;
             }
+
             setInterval(function () {
                 updateMainWrapper();
             }, 1000);
