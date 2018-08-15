@@ -36,6 +36,8 @@ class ResetController extends AbstractController
             return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix());
         }
 
+        LOG::TRACE("Going into Reset mode...");
+
         if (!empty($_POST["reset"])) {
             if (\logics\CSRFLogic::check($_POST["csrf_value"], self::PREFIX)) {
                 \logics\CSRFLogic::reset(self::PREFIX);

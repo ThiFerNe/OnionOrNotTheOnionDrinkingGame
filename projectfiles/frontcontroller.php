@@ -109,8 +109,11 @@ if (!\logics\ResetLogic::isWebsiteBeenSetup() && $requestTopUri !== "/reset") {
 /**
  * Force Updated of System!
  */
-
-\logics\UpdateLogic::updateAll();
+if($requestTopUri !== "/reset") {
+    \logics\UpdateLogic::updateAll();
+} else {
+    LOG::TRACE("Not updating because reset is going to be opened");
+}
 
 /*
  * Logging the requested uri and the transformed top level request uri:
