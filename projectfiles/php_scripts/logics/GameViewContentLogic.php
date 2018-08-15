@@ -88,11 +88,12 @@ class GameViewContentLogic
                         ?><?php
                         if (!$is_watcher) {
                             if (\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId(
-                                    \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id()))
+                                \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id()))
                             ) {
                                 ?> - Skipping...<?php
                             } else {
-                                ?> - <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>game?skip=true">Skip</a><?php
+                                ?> - <a href="<?php \helper\VariousHelper::printUrlPrefix(); ?>game?skip=true">
+                                    Skip</a><?php
                             }
                         }
                         ?>
@@ -156,7 +157,11 @@ class GameViewContentLogic
                         <input type="hidden" name="question_id" value="<?php
                         echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
                         ?>"/>
-                        <input type="submit" name="set_onion" id="question_the_onion_form_submit_button"
+                        <input type="submit" name="set_onion" class="<?php
+                        if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == 1) {
+                            echo "button_chosen_outline";
+                        }
+                        ?>" id="question_the_onion_form_submit_button"
                                value="<?php
                                echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_ONION_SUBMIT_VALUE);
                                ?>"/>
@@ -166,8 +171,11 @@ class GameViewContentLogic
                         <input type="hidden" name="question_id" value="<?php
                         echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
                         ?>"/>
-                        <input type="submit" name="set_not_the_onion"
-                               id="question_not_the_onion_form_submit_button" value="<?php
+                        <input type="submit" name="set_not_the_onion" class="<?php
+                        if (\logics\SessionLogic::getActualAnswerIsOnionByUserSessionId(\logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == -1) {
+                            echo "button_chosen_outline";
+                        }
+                        ?>" id="question_not_the_onion_form_submit_button" value="<?php
                         echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_NOT_ONION_SUBMIT_VALUE);
                         ?>"/>
                     </form>
@@ -244,7 +252,12 @@ class GameViewContentLogic
                             <input type="hidden" name="question_id" value="<?php
                             echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
                             ?>"/>
-                            <input type="submit" name="downvote" id="question_section_downvote_submit_button"
+                            <input type="submit" name="downvote" class="<?php
+                            if (\logics\SessionHasVotedForGameDataLogic::contains($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID], \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) &&
+                                \logics\SessionHasVotedForGameDataLogic::isUpvote($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID], \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == FALSE) {
+                                echo "button_chosen_outline";
+                            }
+                            ?>" id="question_section_downvote_submit_button"
                                    value="<?php
                                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_DOWNVOTE_SUBMIT_VALUE);
                                    ?>"/>
@@ -254,7 +267,12 @@ class GameViewContentLogic
                             <input type="hidden" name="question_id" value="<?php
                             echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID];
                             ?>"/>
-                            <input type="submit" name="upvote" id="question_section_upvote_submit_button"
+                            <input type="submit" name="upvote" class="<?php
+                            if (\logics\SessionHasVotedForGameDataLogic::contains($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID], \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) &&
+                                \logics\SessionHasVotedForGameDataLogic::isUpvote($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID], \logics\SessionLogic::getUserSessionIdByPhpSessionId(session_id())) == TRUE) {
+                                echo "button_chosen_outline";
+                            }
+                            ?>" id="question_section_upvote_submit_button"
                                    value="<?php
                                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_UPVOTE_SUBMIT_VALUE);
                                    ?>"/>
@@ -344,7 +362,7 @@ class GameViewContentLogic
                     ?>"><?php
                         echo $user[\controllers\GameController::USERS_LIST_USERNAME];
                         ?></span><?php
-                    if(\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId($user[\controllers\GameController::USERS_LIST_USERID])) {
+                    if (\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId($user[\controllers\GameController::USERS_LIST_USERID])) {
                         ?><span class="span_user_wants_to_skip"><img
                                 src="<?php \helper\VariousHelper::printUrlPrefix(); ?>images/fastforward.png"/>
                         </span><?php

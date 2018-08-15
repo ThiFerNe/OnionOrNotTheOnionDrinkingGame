@@ -193,6 +193,10 @@ body > main {
     background-color: #b50000;
 }
 
+.button_chosen_outline {
+    border: 2px solid #000000 !important;
+}
+
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
 /* >   >   >   >   >   >   >     STATE AFTERMATH    <   <   <   <   <   <   < */
 /* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~  */
