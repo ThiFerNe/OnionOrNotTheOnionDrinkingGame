@@ -118,6 +118,8 @@ class LocalizationStore
                 $output[self::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_HEADLINE] = "500 - Interner Server Fehler";
                 $output[self::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_PARAGRAPH] = "Es entstand ein interner Fehler im Server, der sehr wahrscheinlich aufgrund einer fehlerhaften Programmierung auftrat.";
 
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE] = "Achtung:<br/>Dieses Browser basierte Spiel nutzt die <strong>Datenverbindung</strong> stark aus! Innerhalb einer Sekunde können bis zu 4 KiB transferiert werden! Innerhalb einer Minute sind das 240 KiB! Innerhalb einer Stunde sind das <strong>14 MiB</strong>!<br/><br/>Verbinde dich mit einem WLAN!";
+
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL] = "Das Zurücksetzen war erfolgreich!";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC] = "Ein Fehler trat während dem Zurücksetzen auf!";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING] = "Dein Name hat gefehlt!";
@@ -237,6 +239,8 @@ class LocalizationStore
                 $output[self::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_HEADLINE] = "500 - Internal Server Error";
                 $output[self::ID_ERRORDOCUMENT500VIEW_BODY_MAIN_PARAGRAPH] = "An internal error occurred in the server, which most probably has been achieved through erroneous programming.";
 
+                $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE] = "Attention:<br/>This browser based game depends heavily on <strong>data usage</strong>! Within a second it transfer up to 4 KiB! Within a minute this is 240 KiB! Within an hour this is <strong>up to 14 MiB</strong>!<br/><br/>Activate your WLAN!";
+
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL] = "The reset has been successful!";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC] = "An error occurred during the reset!";
                 $output[self::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING] = "Your name has been missing!";
@@ -350,6 +354,8 @@ class LocalizationStore
 
     public const ID_ERRORDOCUMENT500VIEW_BODY_MAIN_HEADLINE = "ErrorDocument500View_Body_Main_Headline";
     public const ID_ERRORDOCUMENT500VIEW_BODY_MAIN_PARAGRAPH = "ErrorDocument500View_Body_Main_Paragraph";
+
+    public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE = "FrontendRequestAcrossMessagesLogic_Message_IndexView_Warning_Data_Usage";
 
     public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Successful";
     public const ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC = "FrontendRequestAcrossMessagesLogic_Message_ResetController_Reset_Error_Generic";

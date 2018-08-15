@@ -33,6 +33,11 @@ class IndexView extends AbstractView
                 ?>
             </section>
             <?php
+            \logics\FrontEndRequestAcrossMessagesLogic::appendMessage(
+                \logics\FrontEndRequestAcrossMessagesLogic::TYPE_WARN,
+                \logics\FrontEndRequestAcrossMessagesLogic::MESSAGE_INDEXVIEW_WARNING_DATA_USAGE,
+                "IndexView_"
+            );
             if (!\logics\FrontEndRequestAcrossMessagesLogic::isEmpty()) {
                 ?>
                 <section id="main_section_frontend_messages"><?php

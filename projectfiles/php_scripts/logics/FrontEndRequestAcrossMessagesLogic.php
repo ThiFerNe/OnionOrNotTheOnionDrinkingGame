@@ -43,6 +43,8 @@ class FrontEndRequestAcrossMessagesLogic
     public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME = "Message_ResetController_Reset_Error_Input_Missing_DBUsername";
     public const MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME = "Message_ResetController_Reset_Error_Input_Missing_DBReadOnlyUsername";
 
+    public const MESSAGE_INDEXVIEW_WARNING_DATA_USAGE = "Message_IndexView_Warning_Data_Usage";
+
     public static function appendMessage(string $type, string $message, string $sourcePrefix, string $messageAddendum = NULL)
     {
         if (!isset($_SESSION[self::PREFIX . self::SUFFIX_MESSAGES_ARRAY])) {
@@ -121,6 +123,9 @@ class FrontEndRequestAcrossMessagesLogic
     public static function getMessage(string $messageId)
     {
         switch ($messageId) {
+            case self::MESSAGE_INDEXVIEW_WARNING_DATA_USAGE:
+                return \logics\LocalizationLogic::get(
+                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE);
             case self::MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL:
                 return \logics\LocalizationLogic::get(
                     \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL);
