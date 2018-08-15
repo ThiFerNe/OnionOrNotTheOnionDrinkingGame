@@ -42,6 +42,9 @@ class GameViewContentLogic
                     }
                     ?></span>
             |
+            <?php echo \logics\LobbyLogic::getCurrentQuestionsByLobbyId(\logics\SessionLogic::getInLobbyByPhpSessionId(session_id())) ?>
+            / <?php echo \logics\LobbyLogic::getMaximumQuestionsInThisPlaythrough(\logics\SessionLogic::getInLobbyByPhpSessionId(session_id())); ?>
+            |
             <a href="<?php \helper\VariousHelper::printUrlPrefix() ?>exit" class="btn" id="exit_game_link"><?php
                 echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_EXIT_THE_GAME);
                 ?></a>

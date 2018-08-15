@@ -365,7 +365,7 @@ class LobbyLogic
                 $preparedStatement1 = \integration\DatabaseIntegration::getWriteInstance()->getConnection()->prepare(
                     "UPDATE `lobby` SET `current_gamedata` = ?, `current_questions` = `current_questions` + 1 WHERE `id` = ?;"
                 );
-                if($preparedStatement1->execute(array($selected_question, $lobbyid))) {
+                if ($preparedStatement1->execute(array($selected_question, $lobbyid))) {
                     LOG::TRACE("Before Use Count: " . \logics\LobbyUsedGamedataLogic::getUseCountByLobbyIdAndGameDataId($lobbyid, $selected_question));
                     $result = \logics\LobbyUsedGamedataLogic::putIncreaseByLobby($lobbyid, $selected_question);
                     LOG::TRACE("After Use Count: " . \logics\LobbyUsedGamedataLogic::getUseCountByLobbyIdAndGameDataId($lobbyid, $selected_question));
@@ -396,7 +396,7 @@ class LobbyLogic
         }
         // Otherwise check the use count
         $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
-            "SELECT `gid`, COUNT(*) FROM `lobby_used_gamedata` WHERE `lid` = ? GROUP BY `use_count`;"
+            "SELECT DISTINCT `use_count` FROM `lobby_used_gamedata` WHERE `lid` = ?;"
         );
         if ($preparedStatement->execute(array($lobbyid))) {
             // If we get exactly one row which has been grouped, we can say, that every question has been used
@@ -413,6 +413,24 @@ class LobbyLogic
         }
         $currentQuestions = self::getCurrentQuestionsByLobbyId($lobbyid);
         return $currentQuestions >= $maxQuestions;
+    }
+
+    public static function getMaximumQuestionsInThisPlaythrough(int $lobbyid)
+    {
+        $maxQuestions = self::getMaxQuestionsByLobbyId($lobbyid);
+        if ($maxQuestions < 0) {
+            $preparedStatement = \integration\DatabaseIntegration::getReadInstance()->getConnection()->prepare(
+                "SELECT COUNT(*) AS `count` FROM `gamedata` WHERE `id` NOT IN (" .
+                "SELECT `gid` FROM `lobby_used_gamedata` WHERE `lid` = ? AND `use_count` = (" .
+                "SELECT DISTINCT MIN(`use_count`) FROM `lobby_used_gamedata` WHERE `lid` = ?));"
+            );
+            if ($preparedStatement->execute(array($lobbyid, $lobbyid))) {
+                if ($preparedStatement->rowCount() > 0) {
+                    return $preparedStatement->fetch(\PDO::FETCH_ASSOC)["count"] + self::getCurrentQuestionsByLobbyId($lobbyid);
+                }
+            }
+        }
+        return $maxQuestions;
     }
 
 }
