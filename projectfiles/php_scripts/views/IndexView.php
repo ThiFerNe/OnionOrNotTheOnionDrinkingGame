@@ -73,7 +73,7 @@ class IndexView extends AbstractView
                 <label for="max_questions" id="max_questions_label" class="index_form_description_label"><?php
                     echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_LABEL);
                     ?>:</label>
-                <input type="text" name="max_questions" id="max_questions" value=""
+                <input type="text" name="max_questions" id="max_questions" value="10"
                        placeholder="<?php
                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_INDEXVIEW_BODY_MAIN_FORM_MAX_QUESTIONS_PLACEHOLDER);
                        ?>" autocomplete="off"/>
@@ -93,7 +93,7 @@ class IndexView extends AbstractView
                 <label for="timer_wanted" id="timer_wanted_label" class="index_form_description_label"><?php
                     echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_LABEL);
                     ?>:</label>
-                <input type="text" name="timer_wanted" id="timer_wanted" value="" placeholder="<?php
+                <input type="text" name="timer_wanted" id="timer_wanted" value="30" placeholder="<?php
                 echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_INDEXVIEW_BODY_MAIN_FORM_TIMER_WANTED_PLACEHOLDER);
                 ?>" autocomplete="off"/>
                 <p class="index_form_description_paragraph" id="timer_wanted_desc"><?php
