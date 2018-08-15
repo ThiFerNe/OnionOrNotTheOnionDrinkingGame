@@ -17,6 +17,9 @@ use \helper\LogHelper as LOG;
 
 class GameViewContentLogic
 {
+    public const REDUCE_STRING_TOO = 30;
+    public const REDUCE_STRING_WITH = "...";
+
     public static function betterPrintContent()
     {
         (new \controllers\GameController())->action("");
@@ -30,7 +33,7 @@ class GameViewContentLogic
         $is_watcher = $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_IS_WATCHER];
         ?>
         <h2 id="player_name_headline">
-            <?php echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME]; ?>
+            <?php echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME], self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH)); ?>
         </h2>
         <p id="player_type_and_exit">
                     <span id="player_type">
@@ -54,9 +57,7 @@ class GameViewContentLogic
             case \logics\LobbyLogic::STATE_START:
                 break;
             case \logics\LobbyLogic::STATE_QUESTION:
-                LOG::TRACE("STATE QUESTION");
                 if (isset($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME])) {
-                    LOG::TRACE("RESPONSE");
                     ?>
                     <section id="remaining_time_question_state"><?php
                         $val1 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_SECTION_TIME_REMAINING_PART_1);
@@ -70,12 +71,9 @@ class GameViewContentLogic
                         }
                         ?>
                     </section> <?php
-                } else {
-                    LOG::TRACE("NOPE");
                 }
                 break;
             case \logics\LobbyLogic::STATE_AFTERMATH:
-                LOG::TRACE("STATE AFTERMATH");
                 if (isset($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME])) {
                     ?>
                     <section id="remaining_time_aftermath_state"><?php
@@ -144,11 +142,11 @@ class GameViewContentLogic
                     if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
                         $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
                         \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
-                        echo \logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
+                        echo htmlentities(\logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
                             $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()));
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale())));
                     } else {
-                        echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE];
+                        echo htmlentities($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE]);
                     }
                     ?>
                 </h1>
@@ -235,11 +233,11 @@ class GameViewContentLogic
                     if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
                         $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
                         \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
-                        echo \logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
+                        echo htmlentities(\logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
                             $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()));
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale())));
                     } else {
-                        echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE];
+                        echo htmlentities($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE]);
                     }
                     ?>
                 </h1>
@@ -333,7 +331,7 @@ class GameViewContentLogic
                             echo "list_or_paragraph_ranking_place_others";
                         }
                         ?>">
-                            <?php echo $rank; ?>. <?php echo $ranked_user; ?> - <?php echo $points; ?> <?php
+                            <?php echo htmlentities($rank); ?>. <?php echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($ranked_user, self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH)); ?> - <?php echo htmlentities($points); ?> <?php
                             echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_TERM_POINTS);
                             ?>
                         </li>
@@ -365,7 +363,7 @@ class GameViewContentLogic
                         echo " span_actual_user_is_username";
                     }
                     ?>"><?php
-                        echo $user[\controllers\GameController::USERS_LIST_USERNAME];
+                        echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($user[\controllers\GameController::USERS_LIST_USERNAME], self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH));
                         ?></span><?php
                     if (\logics\SessionLogic::isWantsToSkipAftermathByUserSessionId($user[\controllers\GameController::USERS_LIST_USERID])) {
                         ?><span class="span_user_wants_to_skip"><img

@@ -9,6 +9,17 @@ use \helper\LogHelper as LOG;
 
 class VariousHelper
 {
+    public static function reduceStringIfTooLong(string $value, int $maximumLength, string $appendIfTooLong) {
+        if(strlen($value) > $maximumLength) {
+            if(strlen($appendIfTooLong) >= $maximumLength) {
+                return $appendIfTooLong;
+            }
+            $value = substr($value, 0, $maximumLength - strlen($appendIfTooLong));
+            $value .= $appendIfTooLong;
+        }
+        return $value;
+    }
+
     public static function realPathPrefixAndExistenceCheck(string $path, string $pathPrefix)
     {
         $pathRealpath = realpath($path);
