@@ -15,6 +15,7 @@ require_once(__DIR__ . "/../logics/LobbyUsedGamedataLogic.php");
 
 use \logics\FrontEndRequestAcrossMessagesLogic as FERequestAcrossMLogic;
 use \helper\LogHelper as LOG;
+use logics\LobbyLogic;
 
 class GameController extends AbstractController
 {
@@ -64,11 +65,13 @@ class GameController extends AbstractController
             $lobbyid = \logics\SessionLogic::getInLobbyByPhpSessionId(session_id());
             if ($lobbyid !== NULL) {
                 $current_state = \logics\LobbyLogic::getCurrentStateByLobbyId($lobbyid);
-                if (intval($current_state) === \logics\LobbyLogic::STATE_START) {
+                if (intval($current_state) === \logics\LobbyLogic::STATE_START
+                    && \logics\LobbyLogic::getCurrentQuestionsByLobbyId($lobbyid) == 0
+                ) {
                     \logics\UpdateLogic::switchToNewQuestionOrEnd($lobbyid);
                     LOG::DEBUG("Successfully switched to new question or end");
                 } else {
-                    LOG::ERROR("Current state is not the START state");
+                    LOG::ERROR("Current state is not the START state or current questions are not zero");
                     FERequestAcrossMLogic::appendMessage(
                         FERequestAcrossMLogic::TYPE_ERROR,
                         FERequestAcrossMLogic::MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE,
@@ -180,7 +183,7 @@ class GameController extends AbstractController
                 }
                 return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
             }
-            if(array_key_exists("skip", $_GET) && !empty($_GET["skip"])) {
+            if (array_key_exists("skip", $_GET) && !empty($_GET["skip"])) {
                 \logics\SessionLogic::setWantsToSkipAftermathByPhpSessionId(session_id(), TRUE);
                 return new \actions\RedirectAction(\helper\VariousHelper::getUrlPrefix() . "game");
             }
