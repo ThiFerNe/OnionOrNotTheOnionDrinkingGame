@@ -1,22 +1,20 @@
 <?php
 
-namespace helper;
+namespace views;
 
 require_once(__DIR__ . "/../views/AbstractView.php");
+
 require_once(__DIR__ . "/../helper/LogHelper.php");
-require_once(__DIR__ . "/../logics/LocalizationLogic.php");
-require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
-require_once("VariousHelper.php");
+require_once(__DIR__ . "/../helper/LocalizationHelper.php");
+require_once(__DIR__ . "/../helper/further/LocalizationStore.php");
+require_once(__DIR__ . "/../helper/VariousHelper.php");
 
 use \helper\VariousHelper as VariousHlp;
 use \helper\LogHelper as LOG;
+use \helper\LocalizationHelper as LocalizationHlp;
+use \helper\further\LocalizationStore as LocalizationStore;
 
-/**
- * A helper to print header and footer for the remaining views.
- *
- * @package views
- */
-class ViewFrameHelper
+class HtmlFrame
 {
 /**
  * A function to print the part of the header before the css includes to STDOUT.
@@ -24,7 +22,7 @@ class ViewFrameHelper
 public static function printPreHeader(bool $isRestrictedView = FALSE)
 {
 ?><!DOCTYPE html>
-<html lang="<?php echo \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()); ?>">
+<html lang="<?php echo LocalizationStore::getShortForLocale(LocalizationHlp::getCurrentLocale()); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,15 +38,15 @@ public static function printPreHeader(bool $isRestrictedView = FALSE)
     public static function printPostHeader(bool $isRestrictedView = FALSE)
     {
     ?>
-    <title><?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT); ?></title>
+    <title><?php echo LocalizationHlp::get(LocalizationStore::ID_VIEWFRAMEHELPER_HTML_HEAD_TITLE_TEXT); ?></title>
 </head>
 <body>
 <header>
     <div id="header_headline">
-        <?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT); ?>
+        <?php echo LocalizationHlp::get(LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_TITLE_TEXT); ?>
     </div>
     <div id="header_subheadline">
-        <?php echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT); ?>
+        <?php echo LocalizationHlp::get(LocalizationStore::ID_VIEWFRAMEHELPER_HTML_BODY_SUBTITLE_TEXT); ?>
     </div>
 </header>
 <?php

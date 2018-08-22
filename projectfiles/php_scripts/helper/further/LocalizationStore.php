@@ -1,6 +1,6 @@
 <?php
 
-namespace logics\further;
+namespace helper\further;
 
 class LocalizationStore
 {

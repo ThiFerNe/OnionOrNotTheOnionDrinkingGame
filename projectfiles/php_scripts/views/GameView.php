@@ -5,13 +5,17 @@ namespace views;
 require_once("AbstractView.php");
 
 require_once(__DIR__ . "/../helper/VariousHelper.php");
+require_once(__DIR__ . "/../helper/FrontEndRequestAcrossMessagesHelper.php");
+require_once(__DIR__ . "/../helper/LocalizationHelper.php");
+require_once(__DIR__ . "/../helper/further/LocalizationStore.php");
 
 require_once(__DIR__ . "/../controllers/GameController.php");
 
-require_once(__DIR__ . "/../logics/FrontEndRequestAcrossMessagesLogic.php");
-require_once(__DIR__ . "/../logics/LocalizationLogic.php");
-require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
 require_once(__DIR__ . "/../logics/GameViewContentLogic.php");
+
+use \helper\FrontEndRequestAcrossMessagesHelper as FERequestAMHelper;
+use \helper\LocalizationHelper as LocalizationHlp;
+use \helper\further\LocalizationStore as LocalizationStore;
 
 class GameView extends AbstractView
 {
@@ -34,7 +38,7 @@ class GameView extends AbstractView
         <main>
             <aside id="join_panel">
                 <?php
-                echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_1);
+                echo LocalizationHlp::get(LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_1);
                 ?> <strong><?php
                     $urlprefix = \helper\VariousHelper::getUrlPrefix();
                     if (strlen($urlprefix) >= strlen(strlen("https://")) && substr($urlprefix, 0, strlen("https://")) === "https://") {
@@ -47,11 +51,11 @@ class GameView extends AbstractView
                     }
                     echo $urlprefix;
                     ?></strong> <?php
-                echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_2);
+                echo LocalizationHlp::get(LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_2);
                 ?> <strong><?php
                     echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_LOBBY_CODE];
                     ?></strong><?php
-                $val = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_3);
+                $val = LocalizationHlp::get(LocalizationStore::ID_GAMEVIEW_BODY_ASIDE_JOIN_GAME_PART_3);
                 if (strlen($val) > 0) {
                     echo " " . $val;
                 }

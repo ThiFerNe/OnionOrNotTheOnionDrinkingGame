@@ -2,12 +2,12 @@
 
 namespace views;
 
-require_once(__DIR__ . "/../helper/ViewFrameHelper.php");
 require_once(__DIR__ . "/../helper/LogHelper.php");
 require_once(__DIR__ . "/../helper/VariousHelper.php");
 
+require_once(__DIR__ . "/HtmlFrame.php");
+
 use \helper\LogHelper as LOG;
-use \helper\ViewFrameHelper as ViewFrameHelper;
 
 /**
  * This abstract class serves as a parent class for the different available views inside this application.
@@ -46,15 +46,15 @@ abstract class AbstractView
      */
     public function print()
     {
-        ViewFrameHelper::printPreHeader($this->isRestrictedView());
+        HtmlFrame::printPreHeader($this->isRestrictedView());
         foreach ($this->getCssIncludeFiles() as $wanted_css_include_file) {
             ?>
             <link rel="stylesheet" type="text/css"
                   href="<?php \helper\VariousHelper::printUrlPrefix(); ?>css/<?php echo $wanted_css_include_file; ?>">
             <?php
         }
-        ViewFrameHelper::printPostHeader($this->isRestrictedView());
+        HtmlFrame::printPostHeader($this->isRestrictedView());
         $this->printMain();
-        ViewFrameHelper::printFooter($this->isRestrictedView());
+        HtmlFrame::printFooter($this->isRestrictedView());
     }
 }

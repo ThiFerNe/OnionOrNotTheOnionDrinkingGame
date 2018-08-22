@@ -1,12 +1,12 @@
 <?php
 
-namespace logics;
+namespace helper;
 
 require_once(__DIR__ . "/further/LocalizationStore.php");
 
-class LocalizationLogic
+class LocalizationHelper
 {
-    public const PREFIX = "LocalizationLogic_";
+    public const PREFIX = "LocalizationHelper_";
 
     public const SUFFIX_CURRENT_LOCALE = "Current_Locale";
 
@@ -44,5 +44,5 @@ class LocalizationLogic
     }
 }
 
-LocalizationLogic::$defaultLocalization = LocalizationLogic::loadDefaultLocale();
-LocalizationLogic::$currentLocalization = LocalizationLogic::loadCurrentLocale();
+LocalizationHelper::$defaultLocalization = LocalizationHelper::loadDefaultLocale();
+LocalizationHelper::$currentLocalization = LocalizationHelper::loadCurrentLocale();

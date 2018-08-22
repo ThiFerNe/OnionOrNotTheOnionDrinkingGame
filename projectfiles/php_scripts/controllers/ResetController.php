@@ -9,11 +9,11 @@ require_once(__DIR__ . "/../actions/RedirectAction.php");
 
 require_once(__DIR__ . "/../helper/VariousHelper.php");
 require_once(__DIR__ . "/../helper/LogHelper.php");
+require_once(__DIR__ . "/../helper/FrontEndRequestAcrossMessagesHelper.php");
 
 require_once(__DIR__ . "/../logics/CSRFLogic.php");
-require_once(__DIR__ . "/../logics/FrontEndRequestAcrossMessagesLogic.php");
 
-use \logics\FrontEndRequestAcrossMessagesLogic as FERequestAAcrossMLogic;
+use \helper\FrontEndRequestAcrossMessagesHelper as FERequestAAcrossMLogic;
 use \helper\LogHelper as LOG;
 
 class ResetController extends AbstractController

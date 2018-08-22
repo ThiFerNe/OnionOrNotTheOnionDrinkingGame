@@ -1,11 +1,10 @@
 <?php
 
-namespace logics;
+namespace helper;
 
-
-class FrontEndRequestAcrossMessagesLogic
+class FrontEndRequestAcrossMessagesHelper
 {
-    public const PREFIX = "FrontEndRequestAcrossMessagesLogic_";
+    public const PREFIX = "FrontEndRequestAcrossMessagesHelper_";
 
     public const SUFFIX_MESSAGES_ARRAY = "Messages_Array";
 
@@ -124,77 +123,77 @@ class FrontEndRequestAcrossMessagesLogic
     {
         switch ($messageId) {
             case self::MESSAGE_INDEXVIEW_WARNING_DATA_USAGE:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXVIEW_WARNING_DATA_USAGE);
             case self::MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_SUCCESSFUL);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_GENERIC);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_MISSING);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_USERNAME_TOO_LONG);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CODE_TOO_LONG);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_INVALID);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_TIMER_TOO_MUCH_TIME);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_CREATING_LOBBY_FAILED);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_JOINING_LOBBY_FAILED);
             case self::MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_WRONG_STATE);
             case self::MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_LOBBYID_NULL);
             case self::MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_BOTH_OPTIONS_WERE_WANTED);
             case self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NOT_EXISTS);
             case self::MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_INVALID_QUESTION_ID_NO_NUMBER);
             case self::MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_GAMECONTROLLER_ERROR_MISSING_QUESTION_ID);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_QUESTIONS_INVALID);
             case self::MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_INDEXCONTROLLER_ERROR_MINIMUM_SCORE_INVALID);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBHOST);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_INVALID_DBPORT);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBPORT);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBNAME);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBUSERNAME);
             case self::MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME:
-                return \logics\LocalizationLogic::get(
-                    \logics\further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME);
+                return LocalizationHelper::get(
+                    further\LocalizationStore::ID_FRONTENDREQUESTACROSSMESSAGESLOGIC_MESSAGE_RESETCONTROLLER_RESET_ERROR_INPUT_MISSING_DBREADONLYUSERNAME);
 
 
             default:

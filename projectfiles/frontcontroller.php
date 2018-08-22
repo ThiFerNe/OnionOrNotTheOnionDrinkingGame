@@ -37,9 +37,9 @@ require_once("php_scripts/views/ErrorDocument303View.php");
 
 require_once("php_scripts/logics/ResetLogic.php");
 require_once("php_scripts/logics/UpdateLogic.php");
-require_once("php_scripts/logics/LocalizationLogic.php");
-require_once("php_scripts/logics/further/LocalizationStore.php");
 
+require_once("php_scripts/helper/LocalizationHelper.php");
+require_once("php_scripts/helper/further/LocalizationStore.php");
 require_once("php_scripts/helper/VariousHelper.php");
 
 
@@ -80,11 +80,11 @@ if (isset($_GET["lang"])) {
 
     switch ($language) {
         case "de":
-            \logics\LocalizationLogic::setCurrentLocale(\logics\further\LocalizationStore::LOCALE_GERMAN);
+            \helper\LocalizationHelper::setCurrentLocale(\helper\further\LocalizationStore::LOCALE_GERMAN);
             break;
         case "en":
         default:
-            \logics\LocalizationLogic::setCurrentLocale(\logics\further\LocalizationStore::LOCALE_ENGLISH);
+            \helper\LocalizationHelper::setCurrentLocale(\helper\further\LocalizationStore::LOCALE_ENGLISH);
     }
 
     LOG::TRACE("Language has been changed");

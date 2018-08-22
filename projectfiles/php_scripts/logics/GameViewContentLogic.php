@@ -7,13 +7,14 @@ require_once(__DIR__ . "/../helper/VariousHelper.php");
 require_once(__DIR__ . "/../controllers/GameController.php");
 
 require_once(__DIR__ . "/../helper/LogHelper.php");
+require_once(__DIR__ . "/../helper/FrontEndRequestAcrossMessagesHelper.php");
 
-require_once(__DIR__ . "/../logics/FrontEndRequestAcrossMessagesLogic.php");
-require_once(__DIR__ . "/../logics/LocalizationLogic.php");
+require_once(__DIR__ . "/../logics/LocalizationHelper.php");
 require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
 require_once(__DIR__ . "/../logics/GameViewContentLogic.php");
 
 use \helper\LogHelper as LOG;
+use \helper\FrontEndRequestAcrossMessagesHelper as FERequestAMHelper;
 
 class GameViewContentLogic
 {
@@ -33,15 +34,25 @@ class GameViewContentLogic
         $is_watcher = $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_IS_WATCHER];
         ?>
         <h2 id="player_name_headline">
-            <?php echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME], self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH)); ?>
+            <?php
+            if (isset($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME]) && $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME] !== NULL) {
+                echo htmlentities(
+                    \helper\VariousHelper::reduceStringIfTooLong(
+                        $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USER_NAME],
+                        self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH
+                    )
+                );
+            } else {
+                echo "#InternalError#";
+            } ?>
         </h2>
         <p id="player_type_and_exit">
                     <span id="player_type">
                     <?php
                     if ($is_watcher) {
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_WATCHER);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_WATCHER);
                     } else {
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_PLAYER);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_TYPE_OF_PLAYER_PLAYER);
                     }
                     ?></span>
             |
@@ -49,7 +60,7 @@ class GameViewContentLogic
             / <?php echo \logics\LobbyLogic::getMaximumQuestionsInThisPlaythrough(\logics\SessionLogic::getInLobbyByPhpSessionId(session_id())); ?>
             |
             <a href="<?php \helper\VariousHelper::printUrlPrefix() ?>exit" class="btn" id="exit_game_link"><?php
-                echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_EXIT_THE_GAME);
+                echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_EXIT_THE_GAME);
                 ?></a>
         </p>
         <?php
@@ -60,12 +71,12 @@ class GameViewContentLogic
                 if (isset($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME])) {
                     ?>
                     <section id="remaining_time_question_state"><?php
-                        $val1 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_SECTION_TIME_REMAINING_PART_1);
+                        $val1 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_SECTION_TIME_REMAINING_PART_1);
                         if (strlen($val1) > 0) {
                             echo $val1 . " ";
                         }
                         echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME];
-                        $val2 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_SECTION_TIME_REMAINING_PART_2);
+                        $val2 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_SECTION_TIME_REMAINING_PART_2);
                         if (strlen($val2) > 0) {
                             echo " " . $val2;
                         }
@@ -77,12 +88,12 @@ class GameViewContentLogic
                 if (isset($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME])) {
                     ?>
                     <section id="remaining_time_aftermath_state"><?php
-                        $val1 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SECTION_TIME_REMAINING_PART_1);
+                        $val1 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SECTION_TIME_REMAINING_PART_1);
                         if (strlen($val1) > 0) {
                             echo $val1 . " ";
                         }
                         echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_REMAINING_TIME];
-                        $val2 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SECTION_TIME_REMAINING_PART_2);
+                        $val2 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SECTION_TIME_REMAINING_PART_2);
                         if (strlen($val2) > 0) {
                             echo " " . $val2;
                         }
@@ -107,10 +118,10 @@ class GameViewContentLogic
         }
         ?>
         <?php
-        if (!\logics\FrontEndRequestAcrossMessagesLogic::isEmpty()) {
+        if (!FERequestAMHelper::isEmpty()) {
             ?>
             <section id="main_section_frontend_messages"><?php
-            \logics\FrontEndRequestAcrossMessagesLogic::insertHTML(
+            FERequestAMHelper::insertHTML(
                 "", "msg-box-success",
                 "msg-box-error", "msg-box-warn", "msg-box-info");
             ?></section><?php
@@ -121,7 +132,7 @@ class GameViewContentLogic
             case \logics\LobbyLogic::STATE_START:
                 ?>
                 <h1 id="welcome_headline"><?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_START_HEADLINE_WELCOME);
+                    echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_START_HEADLINE_WELCOME);
                     ?></h1>
                 <?php
                 if (!$is_watcher) {
@@ -129,7 +140,7 @@ class GameViewContentLogic
                     <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
                           id="start_form">
                         <input type="submit" name="start_game" id="start_form_submit_button" value="<?php
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_START_FORM_START_GAME_SUBMIT_VALUE);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_START_FORM_START_GAME_SUBMIT_VALUE);
                         ?>"/>
                     </form>
                     <?php
@@ -141,10 +152,10 @@ class GameViewContentLogic
                     <?php
                     if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
                         $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                        \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
+                        \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationHelper::getCurrentLocale()))) {
                         echo htmlentities(\logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
                             $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale())));
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationHelper::getCurrentLocale())));
                     } else {
                         echo htmlentities($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE]);
                     }
@@ -165,7 +176,7 @@ class GameViewContentLogic
                             }
                             ?>" id="question_the_onion_form_submit_button"
                                    value="<?php
-                                   echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_ONION_SUBMIT_VALUE);
+                                   echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_ONION_SUBMIT_VALUE);
                                    ?>"/>
                         </form>
                         <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
@@ -178,7 +189,7 @@ class GameViewContentLogic
                                 echo "button_chosen_outline";
                             }
                             ?>" id="question_not_the_onion_form_submit_button" value="<?php
-                            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_NOT_ONION_SUBMIT_VALUE);
+                            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_QUESTION_FORM_SET_NOT_ONION_SUBMIT_VALUE);
                             ?>"/>
                         </form>
                     </section>
@@ -206,24 +217,24 @@ class GameViewContentLogic
                 ?>
                 <p id="question_result" class="<?php echo $additionalQuestionResultClass; ?>">
                     <?php
-                    $val1 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART1);
+                    $val1 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART1);
                     if (strlen($val1) > 0) {
                         echo $val1 . " ";
                     }
                     if ($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_IS_ONION]) {
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_TERM_THE_ONION);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_TERM_THE_ONION);
                     } else {
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_TERM_NOT_THE_ONION);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_TERM_NOT_THE_ONION);
                     }
-                    $val2 = \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART2);
+                    $val2 = \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_PART2);
                     if (strlen($val2) > 0) {
                         echo " " . $val2;
                     }
                     if (!$is_watcher) {
                         if ($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_USER_ANSWER_WAS_CORRECT]) {
-                            echo "<br/>" . \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_ANSWER_CORRECT);
+                            echo "<br/>" . \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_ANSWER_CORRECT);
                         } else {
-                            echo "<br/>" . \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_ANSWER_WRONG);
+                            echo "<br/>" . \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_SUBHEADLINE_ANSWER_WRONG);
                         }
                     }
                     ?>
@@ -232,10 +243,10 @@ class GameViewContentLogic
                     <?php
                     if (\logics\GameDataLocalizationLogic::containsByGameDataIdAndLocaleShort(
                         $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                        \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale()))) {
+                        \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationHelper::getCurrentLocale()))) {
                         echo htmlentities(\logics\GameDataLocalizationLogic::getHeadlineByGameDataIdAndLocaleShort(
                             $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_ID],
-                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationLogic::getCurrentLocale())));
+                            \logics\further\LocalizationStore::getShortForLocale(\logics\LocalizationHelper::getCurrentLocale())));
                     } else {
                         echo htmlentities($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HEADLINE]);
                     }
@@ -245,7 +256,7 @@ class GameViewContentLogic
                     <a id="question_subline_link_to_post" href="<?php
                     echo $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_QUESTION_HYPERLINK];
                     ?>" target="_blank"><?php
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_LINK_TO_POST);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_LINK_TO_POST);
                         ?></a>
                     <?php
                     if (!$is_watcher) {
@@ -262,7 +273,7 @@ class GameViewContentLogic
                             }
                             ?>" id="question_section_downvote_submit_button"
                                    value="<?php
-                                   echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_DOWNVOTE_SUBMIT_VALUE);
+                                   echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_DOWNVOTE_SUBMIT_VALUE);
                                    ?>"/>
                         </form>
                         <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
@@ -277,7 +288,7 @@ class GameViewContentLogic
                             }
                             ?>" id="question_section_upvote_submit_button"
                                    value="<?php
-                                   echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_UPVOTE_SUBMIT_VALUE);
+                                   echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_AFTERMATH_FORM_UPVOTE_SUBMIT_VALUE);
                                    ?>"/>
                         </form>
                     <?php }
@@ -292,7 +303,7 @@ class GameViewContentLogic
                 // HEADLINE END
                 ?>
                 <h1 id="question_headline_at_end_state"><?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_HEADLINE);
+                    echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_HEADLINE);
                     ?></h1>
                 <?php
                 // NEXT ROUND BUTTON
@@ -301,14 +312,14 @@ class GameViewContentLogic
                     <form action="<?php \helper\VariousHelper::printUrlPrefix(); ?>game" method="POST"
                           id="play_again_form">
                         <input type="submit" name="next_round" id="play_again_submit_button" value="<?php
-                        echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_FORM_NEXT_ROUND_SUBMIT_VALUE);
+                        echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_FORM_NEXT_ROUND_SUBMIT_VALUE);
                         ?>"/>
                     </form>
                     <?php
                 }
                 ?>
                 <h2 id="ranking_headline_at_end_state"><?php
-                echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_HEADLINE);
+                echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_HEADLINE);
                 ?></h2><?php
                 // RANKING
                 $sorted_playing_user_ranking = $_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_END_RANKING];
@@ -331,8 +342,10 @@ class GameViewContentLogic
                             echo "list_or_paragraph_ranking_place_others";
                         }
                         ?>">
-                            <?php echo htmlentities($rank); ?>. <?php echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($ranked_user, self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH)); ?> - <?php echo htmlentities($points); ?> <?php
-                            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_TERM_POINTS);
+                            <?php echo htmlentities($rank); ?>
+                            . <?php echo htmlentities(\helper\VariousHelper::reduceStringIfTooLong($ranked_user, self::REDUCE_STRING_TOO, self::REDUCE_STRING_WITH)); ?>
+                            - <?php echo htmlentities($points); ?> <?php
+                            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_TERM_POINTS);
                             ?>
                         </li>
                         <?php
@@ -340,7 +353,7 @@ class GameViewContentLogic
                     ?></ol><?php
                 } else {
                     ?><p id="list_or_paragraph_ranking"><?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_NO_ONE_HERE);
+                    echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_STATE_END_RANKING_NO_ONE_HERE);
                     ?></p><?php
                 }
                 break;
@@ -348,7 +361,7 @@ class GameViewContentLogic
         }
         ?>
         <h3 id="playerlist_headline"><?php
-            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_HEADLINE);
+            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_HEADLINE);
             ?></h3>
         <?php
         if (count($_RESPONSE[\controllers\GameController::PREFIX . \controllers\GameController::SUFFIX_USERS_LIST]) > 0) {
@@ -394,10 +407,10 @@ class GameViewContentLogic
                     ?><span class="span_points_or_watching"><?php
                         if (!$user[\controllers\GameController::USERS_LIST_IS_WATCHING]) {
                             echo $user[\controllers\GameController::USERS_LIST_POINTS] . " ";
-                            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_TERM_POINTS);
+                            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_TERM_POINTS);
                         } else {
                             echo " (";
-                            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_TERM_WATCHING);
+                            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_TERM_WATCHING);
                             echo ")";
                         }
                         ?></span>
@@ -408,7 +421,7 @@ class GameViewContentLogic
             <?php
         } else {
             ?><p id="playerlist_listing_or_paragraph"><?php
-            echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_NO_ONE_HERE);
+            echo \logics\LocalizationHelper::get(\logics\further\LocalizationStore::ID_GAMEVIEW_BODY_MAIN_PLAYERS_NO_ONE_HERE);
             ?></p><?php
         }
         ?><?php

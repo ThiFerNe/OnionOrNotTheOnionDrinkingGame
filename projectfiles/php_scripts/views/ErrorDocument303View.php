@@ -4,8 +4,11 @@ namespace views;
 
 require_once("AbstractView.php");
 
-require_once(__DIR__ . "/../logics/LocalizationLogic.php");
-require_once(__DIR__ . "/../logics/further/LocalizationStore.php");
+require_once(__DIR__ . "/../helper/LocalizationHelper.php");
+require_once(__DIR__ . "/../helper/further/LocalizationStore.php");
+
+use \helper\LocalizationHelper as LocalizationHlp;
+use \helper\further\LocalizationStore as LocalizationStore;
 
 /**
  * The view for the ErrorDocument 303 page
@@ -59,12 +62,12 @@ class ErrorDocument303View extends AbstractView
             <article>
                 <h1>
                     <?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_HEADLINE);
+                    echo LocalizationHlp::get(LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_HEADLINE);
                     ?>
                 </h1>
                 <p>
                     <?php
-                    echo \logics\LocalizationLogic::get(\logics\further\LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_PARAGRAPH);
+                    echo LocalizationHlp::get(LocalizationStore::ID_ERRORDOCUMENT303VIEW_BODY_MAIN_PARAGRAPH);
                     ?> <a href="<?php echo $_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO];
                     ?>"><?php echo htmlentities($_RESPONSE[ErrorDocument303View::PREFIX . ErrorDocument303View::REFER_TO]); ?></a>.
                 </p>

@@ -8,14 +8,13 @@ require_once(__DIR__ . "/../actions/ViewAction.php");
 
 require_once(__DIR__ . "/../helper/VariousHelper.php");
 require_once(__DIR__ . "/../helper/LogHelper.php");
+require_once(__DIR__ . "/../helper/FrontEndRequestAcrossMessagesHelper.php");
 
 require_once(__DIR__ . "/../logics/SessionLogic.php");
-require_once(__DIR__ . "/../logics/FrontEndRequestAcrossMessagesLogic.php");
 require_once(__DIR__ . "/../logics/LobbyUsedGamedataLogic.php");
 
-use \logics\FrontEndRequestAcrossMessagesLogic as FERequestAcrossMLogic;
+use \helper\FrontEndRequestAcrossMessagesHelper as FERequestAcrossMLogic;
 use \helper\LogHelper as LOG;
-use logics\LobbyLogic;
 
 class GameController extends AbstractController
 {
